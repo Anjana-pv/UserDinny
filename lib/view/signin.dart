@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/common_widgets/table_dropdown.dart';
@@ -11,7 +12,10 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
      TextEditingController passwordcontroller=TextEditingController();
     TextEditingController emailcontrooller=TextEditingController();
-    TextEditingController phonenumberController=TextEditingController();
+    TextEditingController phonenberController=TextEditingController();
+    TextEditingController userNameController=TextEditingController();
+  
+  
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -40,28 +44,48 @@ class SignupScreen extends StatelessWidget {
             
             const SizedBox(height: 30,),
             reusableTextFeild(
-              'Enter Uername',
+              'Enter Uer Name',
                Icons.verified_user, 
-               false, emailcontrooller),
+               false, userNameController),
                const SizedBox(height: 30,),
                reusableTextFeild(
-                "Enter Password",
-                 Icons.lock,
-                 true,
+                "Enter Email id",
+                 Icons.mail,
+                 false,
                    passwordcontroller),
                 const SizedBox(
                   height: 20,
                 ),
                 reusableTextFeild(
                 "Enter Phone Number",
+                 Icons.phone,
+                 false,
+                   emailcontrooller),
+                    const SizedBox(
+                  height: 20,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                reusableTextFeild(
+                "Enter Password",
                  Icons.lock,
                  true,
-                   phonenumberController),
+                   phonenberController),
                     const SizedBox(
                   height: 20,
                 ),
                 SignInSignButton(context,false,(){
-                 Get.to(HomeScreen());
+                  FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    email:emailcontrooller.text ,
+                     password: passwordcontroller.text)
+                    .then((value){
+                      print('created new account');
+                     Get.to(HomeScreen());
+                  }).onError((error, stackTrace) {
+                    print("Error occured ${error.toString()}");
+                  });
+                 
                 } ),
                 
             ],

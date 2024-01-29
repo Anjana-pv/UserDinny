@@ -45,6 +45,7 @@ List<Widget> buildTimeSlots(String startTime, String endTime) {
   return timeSlotWidgets;
 }
 
+// ignore: must_be_immutable
 class CustomElevatedButton extends StatelessWidget {
   CustomElevatedButton({
     Key? key,

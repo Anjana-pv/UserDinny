@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:user_dinny/model/booking_model.dart';
-import 'package:user_dinny/model/usermodel.dart';
+
 
 class NewBookingController extends GetxController {
   TextEditingController guestcounController = TextEditingController();

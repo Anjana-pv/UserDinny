@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:user_dinny/view/home_screen.dart';
 import 'package:user_dinny/view/login.dart';
 
 
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
       ),
      initialRoute: '/',
      getPages: [
-      GetPage(name:'/',page:()=>Login()),
+      GetPage(name:'/',page:()=>const Login()),
       
      ],
     );

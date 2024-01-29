@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/common_widgets/table_dropdown.dart';
@@ -41,7 +43,24 @@ class Login extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              SignInSignButton(context, true, () {}),
+              SignInSignButton(context, true, () {
+                FirebaseAuth.instance.
+                signInWithEmailAndPassword(email
+                : emailcontrooller.text, 
+                password: passwordcontroller
+                .text).
+                then((value){
+                 
+                  Get.to(HomeScreen());
+                }).onError((error, stackTrace){
+                   Get.snackbar('Error', 
+                  'Invalid UserName or Password' ,
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red,
+                  );
+                });
+            
+              }),
               signupotion()
             ],
           ),
@@ -56,15 +75,15 @@ class Login extends StatelessWidget {
       children: [
         const Text(
           "Don't have account?",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white,fontSize: 20),
         ),
         GestureDetector(
             onTap: () {
-              Get.to(SignupScreen());
+              Get.to(const SignupScreen());
             },
             child: const Text('Sign Up',
                 style: TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold))),
+                    color: Colors.white, fontWeight: FontWeight.bold,fontSize: 20))),
       ],
     );
   }

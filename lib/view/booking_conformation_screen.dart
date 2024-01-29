@@ -1,9 +1,7 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/booking.dart';
-import 'package:user_dinny/controller/calender.dart';
 import 'package:user_dinny/model/booking_model.dart';
 import 'package:user_dinny/view/payment.dart';
 
@@ -172,23 +170,23 @@ class BookingConfirmation extends StatelessWidget {
                     onPressed: () {
                       Get.to(const RazorpayScreeen());
                     },
-                    child: const Text(
-                      'Advance Payment',
-                      style: TextStyle(color: Colors.white),
-                    ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
-                          return Color.fromARGB(123, 20, 77, 14);
+                          return const Color.fromARGB(123, 20, 77, 14);
                         },
                       ),
-                      minimumSize: MaterialStateProperty.all(Size(300, 40)),
+                      minimumSize: MaterialStateProperty.all(const Size(300, 40)),
                       // Adjust the size as needed
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         ),
                       ),
+                    ),
+                    child: const Text(
+                      'Advance Payment',
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ],

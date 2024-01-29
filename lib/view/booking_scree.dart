@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_dinny/common_widgets/client_details_container.dart';
 import 'package:user_dinny/common_widgets/custom_widgets.dart';
 import 'package:user_dinny/common_widgets/menucard_img.dart';
-import 'package:user_dinny/common_widgets/table_dropdown.dart';
 import 'package:user_dinny/common_widgets/timeslot_widget.dart';
 import 'package:user_dinny/controller/booking.dart';
 import 'package:user_dinny/controller/calender.dart';

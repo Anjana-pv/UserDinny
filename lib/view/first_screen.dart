@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:user_dinny/common_widgets/custom_widgets.dart';
+import 'package:user_dinny/view/common_widgets/custom_widgets.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/styling/textsytling.dart';
 import 'package:user_dinny/view/booking_scree.dart';
@@ -18,7 +16,7 @@ class ScreenFirst extends StatelessWidget {
     double containerHeightMultiplier = MediaQuery.of(context).size.height * 0.2;
     double textSizeMultiplier = MediaQuery.of(context).size.width * 0.04;
 
-    final user = FirebaseAuth.instance.currentUser;
+    // final user = FirebaseAuth.instance.currentUser;
     final usercontroller = Get.put(UserController());
     return SingleChildScrollView(
       child: Column(

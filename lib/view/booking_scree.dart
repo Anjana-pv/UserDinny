@@ -3,13 +3,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_dinny/common_widgets/client_details_container.dart';
-import 'package:user_dinny/common_widgets/custom_widgets.dart';
-import 'package:user_dinny/common_widgets/menucard_img.dart';
-import 'package:user_dinny/common_widgets/timeslot_widget.dart';
+import 'package:user_dinny/controller/authendication.dart';
+import 'package:user_dinny/controller/firebase_fuction.dart';
+import 'package:user_dinny/view/common_widgets/client_details_container.dart';
+import 'package:user_dinny/view/common_widgets/custom_widgets.dart';
+import 'package:user_dinny/view/common_widgets/menucard_img.dart';
+import 'package:user_dinny/view/common_widgets/timeslot_widget.dart';
 import 'package:user_dinny/controller/booking.dart';
 import 'package:user_dinny/controller/calender.dart';
 import 'package:user_dinny/view/booking_conformation_screen.dart';
+import 'package:user_dinny/view/signin.dart';
 
 GlobalKey<FormState> tableformKey = GlobalKey<FormState>();
 TimeOfDay? selectedTime;
@@ -35,6 +38,7 @@ class BookingScreen extends StatelessWidget {
     final BookingController bookingcontroller = Get.put(BookingController());
     final NewBookingController newbooking = Get.put(NewBookingController());
     double paddingMultiplier = MediaQuery.of(context).size.width * 0.05;
+  UserController auth=Get.put(UserController());
 
     return Obx(
       () => Scaffold(
@@ -229,7 +233,11 @@ class BookingScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () async {
+                      
+                 final Map<String, dynamic> userData=await auth.getuserdata();
+                 
                       Get.to(BookingConfirmation(
+                        userData: userData,
                           restaurantName: data['restaurantName'],
                           location: data['city'],
                           bookingTime: timeSlotController.selectedTimeSlot.value

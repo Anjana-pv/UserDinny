@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/common_widgets/table_dropdown.dart';
+import 'package:user_dinny/view/common_widgets/table_dropdown.dart';
 import 'package:user_dinny/controller/authendication.dart';
 import 'package:user_dinny/styling/colors.dart';
 import 'package:user_dinny/view/home_screen.dart';
+
+
+TextEditingController passwordcontroller = TextEditingController();
+    TextEditingController emailcontrooller = TextEditingController();
+    TextEditingController phonenberController = TextEditingController();
+    TextEditingController userNameController = TextEditingController();
 
 class SignupScreen extends StatelessWidget {
   final AuthController authController = Get.put(AuthController());
   SignupScreen({super.key});
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  TextEditingController passwordcontroller = TextEditingController();
-    TextEditingController emailcontrooller = TextEditingController();
-    TextEditingController phonenberController = TextEditingController();
-    TextEditingController userNameController = TextEditingController();
+  
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +90,7 @@ class SignupScreen extends StatelessWidget {
 
                       if (authController.user.value != null) {
                         print('created new account');
-                        Get.offAll(HomeScreen());
+                        Get.to(HomeScreen());
                       }
                     }
                   }),

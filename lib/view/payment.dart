@@ -125,10 +125,11 @@ void initState(){
             openamount(amount);
             });
           }
-        }, child:const Padding(padding: EdgeInsets.all(8.0),
+        },
+        style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(123, 20, 77, 14)),
+         child:const Padding(padding: EdgeInsets.all(8.0),
         child: Text('Make payment',style:TextStyle(color: Colors.white) ,),
         ),
-        style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(123, 20, 77, 14)),
         )
       ]
       ),

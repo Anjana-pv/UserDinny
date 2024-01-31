@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/common_widgets/table_dropdown.dart';
+import 'package:user_dinny/view/common_widgets/table_dropdown.dart';
 import 'package:user_dinny/controller/authendication.dart';
 import 'package:user_dinny/styling/colors.dart';
 import 'package:user_dinny/view/home_screen.dart';
 import 'package:user_dinny/view/signin.dart';
 
-class Login extends StatelessWidget {
-  final AuthController authController = Get.put(AuthController());
-  final GlobalKey<FormState> validationKey = GlobalKey<FormState>();
-  TextEditingController passwordcontroller = TextEditingController();
-  TextEditingController emailcontrooller = TextEditingController();
+final GlobalKey<FormState> validationKey = GlobalKey<FormState>();
+TextEditingController passwordcontroller = TextEditingController();
+TextEditingController emailcontrooller = TextEditingController();
 
-  Login({super.key});
+class Login extends StatelessWidget {
+ 
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.put(AuthController());
     return Scaffold(
       body: Form(
         key: validationKey,
@@ -54,7 +55,7 @@ class Login extends StatelessWidget {
                     );
                     if (authController.user.value != null) {
                       print('created new account');
-                      Get.to(HomeScreen());
+                      Get.to(const HomeScreen());
                     }
                   }
                 }),

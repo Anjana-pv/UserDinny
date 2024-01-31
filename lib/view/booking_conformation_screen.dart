@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/booking.dart';
-import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/model/booking_model.dart';
+import 'package:user_dinny/view/home_screen.dart';
 import 'package:user_dinny/view/payment.dart';
 
 class BookingConfirmation extends StatelessWidget {
@@ -17,6 +17,7 @@ class BookingConfirmation extends StatelessWidget {
     required this.restaurantId,
     required this.tableType,
     required this.email,
+    required this.userData,
   }) : super(key: key);
 
   final String restaurantName;
@@ -27,12 +28,12 @@ class BookingConfirmation extends StatelessWidget {
   final String restaurantId;
   final String tableType;
   final String email;
+  final Map<String, dynamic> userData;
 
   @override
   Widget build(BuildContext context) {
     NewBookingController newbooking = Get.put(NewBookingController());
-    UserController userController=Get.put(UserController());
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -145,9 +146,36 @@ class BookingConfirmation extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 color: const Color.fromARGB(255, 255, 255, 255),
               ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('User Name'),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('User Detail',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Name"),
+                              Text("Contact"),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(" : ${userData['username'] ?? ''}"),
+                              Text(" : ${userData['phoneNumber'] ?? ''}"),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(
@@ -179,7 +207,8 @@ class BookingConfirmation extends StatelessWidget {
                           return const Color.fromARGB(123, 20, 77, 14);
                         },
                       ),
-                      minimumSize: MaterialStateProperty.all(const Size(300, 40)),
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(300, 40)),
                       // Adjust the size as needed
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
@@ -199,19 +228,19 @@ class BookingConfirmation extends StatelessWidget {
               height: 30,
             ),
             ElevatedButton(
-              onPressed: ()async {
+              onPressed: () async {
                 final bookingData = BookingModel(
-                
                     date: bookingDate,
                     time: bookingTime,
                     tableType: tableType,
                     guestCount: guestCount,
                     userId: '2345678hhb',
                     userName: 'amal',
-                    phoneNumber: '1234455', 
+                    phoneNumber: '1234455',
                     resturentId: restaurantId);
-            final responce=  await  newbooking.newbooking(bookingData);
-            log('$responce');
+                final responce = await newbooking.newbooking(bookingData);
+                Get.to(const HomeScreen());
+                log('$responce');
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith<Color>(

@@ -40,7 +40,7 @@ List<Widget> buildTimeSlots(String startTime, String endTime) {
 
       timeSlotWidgets.add(const SizedBox(width: 8));
       start = start.add(const Duration(hours: 1));
-      index++; // Increment the index counter
+      index++; 
     }
   } catch (e) {
     print("Error parsing time: $e");

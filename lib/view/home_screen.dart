@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/view/booking_history.dart';
-import 'package:user_dinny/view/booking_scree.dart';
 import 'package:user_dinny/view/first_screen.dart';
 import 'package:user_dinny/view/profile_screen.dart';
 import 'package:user_dinny/view/search_screen.dart';
@@ -17,7 +16,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usercontroller = Get.put(UserController());
-    Map<String, dynamic> data={};
+  
     return Obx(() => 
     Scaffold(
       appBar: AppBar(
@@ -39,7 +38,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: IndexedStack(
         index: usercontroller.selectedIndex.value,
-        children: <Widget> [ 
+        children: const <Widget> [ 
           ScreenFirst(),
          ScreenBookingHistory(),
           SearchScreen(), 

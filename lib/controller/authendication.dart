@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
    
@@ -27,8 +28,12 @@ class AuthController extends GetxController {
         password: password,
       );
       if (userCredential.user != null) {
+
       String userId = userCredential.user!.uid;
 
+       SharedPreferences getuserId =  await SharedPreferences.getInstance();
+        getuserId.setString('getuser_id', userId);
+  
       
       await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'userId': userId,
@@ -55,10 +60,10 @@ class AuthController extends GetxController {
       email: email,
       password: password,
     );
-    return null; // Sign in successful, return null or a success code
+    return null;
   } catch (e) {
-    // print("Error in sign in: $e");
-    return "Sign in failed. Please check your credentials."; // Return an error message
+   
+    return "Sign in failed. Please check your credentials."; 
   }
 }
 

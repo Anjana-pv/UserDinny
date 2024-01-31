@@ -5,6 +5,7 @@ import 'package:user_dinny/view/home_screen.dart';
 import 'package:user_dinny/view/login.dart';
 
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       ),
      initialRoute: '/',
      getPages: [
-      GetPage(name:'/',page:()=> HomeScreen()), 
+      GetPage(name:'/',page:()=>Login ()), 
       
      ],
     );

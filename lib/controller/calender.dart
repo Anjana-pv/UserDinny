@@ -8,7 +8,7 @@ class BookingController extends GetxController {
   Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
 
 
-Future<void> onDaySelected(DateTime selectedDay, DateTime focusedDay) async{
+Future<void> onDaySelected(DateTime selectedDay) async{
   selectedDate.value = selectedDay;
 }
 

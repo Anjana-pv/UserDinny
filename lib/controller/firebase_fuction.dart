@@ -31,8 +31,18 @@ Future<List<String>> fetchProfileImageUrls() async {
       return [];
     }
   }
+ 
+   Stream<QuerySnapshot> getuserDeatils()  {
+  final CollectionReference accepted =
+      FirebaseFirestore.instance.collection('users');
+  final acceptStream = accepted.snapshots();
+  return acceptStream;
+  }
+var selectedIndex = 0.obs;
 
-
+  void setIndex(int index) {
+    selectedIndex.value = index;
+  }
   }
 
 

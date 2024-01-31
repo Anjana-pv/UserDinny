@@ -11,16 +11,16 @@ import 'package:user_dinny/controller/booking.dart';
 import 'package:user_dinny/controller/calender.dart';
 import 'package:user_dinny/view/booking_conformation_screen.dart';
 
-// ignore: must_be_immutable
-class BookingScreen extends StatelessWidget {
+GlobalKey<FormState> tableformKey = GlobalKey<FormState>();
+TimeOfDay? selectedTime;
+String? selectedTableType;
+final Rx<String> selectedTimeSlot = ''.obs;
 
+class BookingScreen extends StatelessWidget {
   final String id;
   final Map<String, dynamic> data;
-  final Rx<String> selectedTimeSlot = ''.obs;
-   GlobalKey<FormState> tableformKey = GlobalKey<FormState>();
-   TimeOfDay? selectedTime;
-   String? selectedTableType;
-  BookingScreen({
+
+  const BookingScreen({
     Key? key,
     required this.id,
     required this.data,
@@ -28,9 +28,12 @@ class BookingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NewBookingController timeSlotController =
+        Get.put(NewBookingController());
+
     DateTime selectedDate = DateTime.now();
     final BookingController bookingcontroller = Get.put(BookingController());
-    final NewBookingController newbooking =Get.put(NewBookingController());
+    final NewBookingController newbooking = Get.put(NewBookingController());
     double paddingMultiplier = MediaQuery.of(context).size.width * 0.05;
 
     return Obx(
@@ -38,22 +41,20 @@ class BookingScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             data['restaurantName'] ?? '',
-             style: GoogleFonts.lemon(
+            style: GoogleFonts.lemon(
               textStyle: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ), 
+          ),
           centerTitle: true,
         ),
-        body: 
-        Form(
-          child:SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Column(
-              children: [
+        body: Form(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Column(children: [
                 Center(
                   child: Container(
                       height: MediaQuery.of(context).size.height * 0.23,
@@ -76,20 +77,21 @@ class BookingScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        placeholder: (context, url) =>const Center(
-                       child:SizedBox(
-                        width: 20.0,
-                        height: 20.0,
-                           child: CircularProgressIndicator(
+                        placeholder: (context, url) => const Center(
+                          child: SizedBox(
+                            width: 20.0,
+                            height: 20.0,
+                            child: CircularProgressIndicator(
                               color: Color.fromARGB(255, 16, 52, 18),
-                              backgroundColor: Color.fromARGB(255, 252, 251, 250),
+                              backgroundColor:
+                                  Color.fromARGB(255, 252, 251, 250),
                               strokeWidth: 2.0,
                             ),
-                       ),),
+                          ),
+                        ),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
-                      )
-                      ),
+                      )),
                 ),
                 const SizedBox(
                   height: 22,
@@ -105,20 +107,20 @@ class BookingScreen extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Roboto'),
-                                ),
-                              InkWell(
-                                onTap: () async {
-                                DateTime? pickedDate = await showDatePicker(
-                                 context: context,
-                                 initialDate: DateTime.now(),
-                                firstDate: DateTime(2024),
-                               lastDate: DateTime(2025),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2024),
+                            lastDate: DateTime(2025),
                           );
                           if (pickedDate != null &&
                               pickedDate != selectedDate) {
-                               selectedDate = pickedDate;
-                               bookingcontroller.selectedDate(selectedDate);
-                             }
+                            selectedDate = pickedDate;
+                            bookingcontroller.selectedDate(selectedDate);
+                          }
                           log("$selectedDate");
                         },
                         child: const Padding(
@@ -192,7 +194,6 @@ class BookingScreen extends StatelessWidget {
                     children: [
                       Container(
                         height: MediaQuery.of(context).size.height * 0.04,
-
                         width: MediaQuery.of(context).size.width * 0.25,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black, width: 1.0),
@@ -227,49 +228,29 @@ class BookingScreen extends StatelessWidget {
                   height: 20,
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-                      // int? selectedTableType = bookingcontroller.selectedTableType.value;
-                    //      if (selectedTableType != null &&   bookingcontroller.guestcounController.text.isNotEmpty) {
-                  Get.to( BookingConfirmation(
-                    restaurantName:data['restaurantName'], 
-                    location: data['city'], 
-                    bookingTime:selectedTime.toString(), 
-                   bookingDate:bookingcontroller.selectedDate.string,
-                     guestCount: newbooking.guestcounController.text,
-                    restaurantId : id,
-                     tableType: newbooking.selectedTableType.string,
-                      email: data['email'] ?? ''));
-
-                  // print("count$bookingcontroller.guestcounController.text");
-                         
-                  },
-                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
+                    onPressed: () async {
+                      Get.to(BookingConfirmation(
+                          restaurantName: data['restaurantName'],
+                          location: data['city'],
+                          bookingTime: timeSlotController.selectedTimeSlot.value
+                              .toString(),
+                          bookingDate: selectedDate.toString(),
+                          guestCount: newbooking.guestcounController.text,
+                          restaurantId: id,
+                          tableType: newbooking.selectedTableType.string,
+                          email: data['email'] ?? ''));
+                    },
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 32, 101, 68),
-                    )
-                    ),
-                   
-                     
-                    
-                    // int? selectedTableType =
-                    //     bookingcontroller.selectedTableType.val
-                         
-                 
-                         
-                  
-                  
-                  
-                  child: const Text(
-                    '   Book Now   ',
-                    style: TextStyle(color: Colors.white),
-                  
-                  )
-                  
-                )
-              ]
+                    )),
+                    child: const Text(
+                      '   Book Now   ',
+                      style: TextStyle(color: Colors.white),
+                    ))
+              ]),
             ),
           ),
-        ),
         ),
       ),
     );

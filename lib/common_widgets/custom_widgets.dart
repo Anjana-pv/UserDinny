@@ -32,7 +32,10 @@ import 'package:flutter/material.dart';
                   fit: BoxFit.cover,
                 )),
           ),
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => Padding(
+            padding: const EdgeInsets.all(48.0), 
+            child: const CircularProgressIndicator(),
+          ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),

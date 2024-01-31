@@ -9,11 +9,12 @@ import 'package:user_dinny/model/booking_model.dart';
 
 class NewBookingController extends GetxController {
   TextEditingController guestcounController = TextEditingController();
-
+final RxBool isSelected = false.obs;
+final RxString selectedValue=''.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
   Rx<TimeOfDay?> selectedTime = Rx<TimeOfDay?>(null);
-  Rx<String?> selectedTimeSlot = Rx<String?>(null);
   RxInt selectedTableType = 2.obs;
+  final RxString selectedTimeSlot=''.obs; 
 
   void selectDate(DateTime date) {
     selectedDate.value = date;
@@ -31,34 +32,7 @@ class NewBookingController extends GetxController {
     selectedTableType.value = value ?? 2;
   }
 
-  // Future<bool> addbookTo(book book) async {
-  //  Map<String,dynamic> bookinfo={
-  //       'restaurantId': book.restaurantId,
-  //       'date': book.date,
-  //       'time': book.time,
-  //       'tabletype': book.tabletype,
-  //       'guestCount': book.guestCount,
-  //       'city': book.city,
-  //       'address': book.address,
-  //       'profileImage': book.profileImage,
-  //       'timeslot': book.email,
-  //       'resturenName': book.resturenName,
-
-  //     };
-  //     try{
-  //       await FirebaseFirestore.
-  //       instance.collection('book_info').
-  //       doc().
-  //       set(bookinfo);
-  //       return true;
-  //     }
-
-  //    catch (e) {
-  //     return false;
-
-  //   }
-  // }
-
+  
   Future<bool> addbookToFirestore(
     String restaurantId,
     String tableType,

@@ -2,10 +2,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
-final RxBool isSelected = false.obs;
-
+import 'package:user_dinny/controller/booking.dart';
+final NewBookingController timeSlotController =
+      Get.put(NewBookingController());
 List<Widget> buildTimeSlots(String startTime, String endTime) {
+ 
+
   List<Widget> timeSlotWidgets = [];
 
   try {
@@ -19,13 +21,15 @@ List<Widget> buildTimeSlots(String startTime, String endTime) {
       String formattedStartTime = dateFormat.format(start);
       start = start.add(const Duration(hours: 1));
       String formattedEndTime = dateFormat.format(start);
-    
+
       timeSlotWidgets.add(
         InkWell(
           onTap: () {
             final newTimeSlot = '$formattedStartTime - $formattedEndTime';
-            isSelected.value = true; // Set isSelected to true
+          timeSlotController.isSelected.value =
+                true; // Set isSelected to true
             print('Selected time slot index: $index');
+           
           },
           child: CustomElevatedButton(
             selectedTime: '$formattedStartTime - $formattedEndTime',
@@ -58,20 +62,22 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     
     return Obx(() {
       return ElevatedButton(
         onPressed: () {
-          log(selectedTime);
-          if (isSelected==false) {
+           timeSlotController.selectedTimeSlot.value = selectedTime; 
+          if (isSelected == false) {
             isSelected = true.obs;
           } else {
             isSelected = false.obs;
-          }  
+          }
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateColor.resolveWith(
             (Set<MaterialState> states) => isSelected.value
-                ? const Color.fromARGB(255, 255, 60, 0) // Yellow color when selected
+                ? const Color.fromARGB(
+                    255, 47, 216, 32) // Yellow color when selected
                 : const Color.fromARGB(255, 236, 239, 242), // Default color
           ),
         ),

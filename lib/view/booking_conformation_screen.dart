@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/booking.dart';
+import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/model/booking_model.dart';
 import 'package:user_dinny/view/payment.dart';
 
@@ -30,6 +31,8 @@ class BookingConfirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NewBookingController newbooking = Get.put(NewBookingController());
+    UserController userController=Get.put(UserController());
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text(

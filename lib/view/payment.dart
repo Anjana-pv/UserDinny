@@ -16,7 +16,7 @@ class _RazorpayScreeenState extends State<RazorpayScreeen> {
   void openamount(amount)async{
     amount=amount*100;
     var options ={
-      'key':'addBookingToFirestore',
+      'key':'rzp_tes',
       'amount':amount,
       'name':"Our_Dinny",
       'prefill':{"contact":'1234567890','email':'text@gmail.com'},
@@ -70,19 +70,22 @@ void initState(){
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pay Advance Bill'),
+        title: const Text('Pay Advance Bill'),
       ),
      backgroundColor: const Color.fromARGB(255, 247, 242, 242),
      body: SingleChildScrollView(
       child: Column(children: [
         const SizedBox(height:100),
-        Image.asset('',
-         width:300
+        Image.asset('assest/images/logo-img.png',
+
+
+         width:200
+
         ),
         const SizedBox(
           height: 10,
         ),
-        const Text('Pay advance payment to coform your booking ',
+        const Text('Pay advance payment to Confirm your booking ',
         textAlign:TextAlign.center,
         ),
         const SizedBox(height: 30,),

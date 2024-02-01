@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_dinny/controller/authendication.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/view/common_widgets/client_details_container.dart';
 import 'package:user_dinny/view/common_widgets/custom_widgets.dart';
@@ -12,7 +11,7 @@ import 'package:user_dinny/view/common_widgets/timeslot_widget.dart';
 import 'package:user_dinny/controller/booking.dart';
 import 'package:user_dinny/controller/calender.dart';
 import 'package:user_dinny/view/booking_conformation_screen.dart';
-import 'package:user_dinny/view/signin.dart';
+
 
 GlobalKey<FormState> tableformKey = GlobalKey<FormState>();
 TimeOfDay? selectedTime;

@@ -2,16 +2,13 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 
 class BookingController extends GetxController {
-  
   Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
 
-
-Future<void> onDaySelected(DateTime selectedDay) async{
-  selectedDate.value = selectedDay ;
-}
+  Future<void> onDaySelected(DateTime selectedDay) async {
+    selectedDate.value = selectedDay;
+  }
 
   Future<void> bookSelectedDate() async {
     try {

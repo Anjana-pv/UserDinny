@@ -234,9 +234,9 @@ class BookingConfirmation extends StatelessWidget {
                     time: bookingTime,
                     tableType: tableType,
                     guestCount: guestCount,
-                    userId: '2345678hhb',
-                    userName: 'amal',
-                    phoneNumber: '1234455',
+                    userId: userData['userId'],
+                    userName: userData['username'],
+                    phoneNumber: userData['phoneNumber'],
                     resturentId: restaurantId);
                 final responce = await newbooking.newbooking(bookingData);
                 Get.to(const HomeScreen());

@@ -12,13 +12,27 @@ class ScreenFirst extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     double paddingMultiplier = MediaQuery.of(context).size.width * 0.05;
     double containerHeightMultiplier = MediaQuery.of(context).size.height * 0.2;
     double textSizeMultiplier = MediaQuery.of(context).size.width * 0.04;
 
     // final user = FirebaseAuth.instance.currentUser;
     final usercontroller = Get.put(UserController());
-    return SingleChildScrollView(
+    
+   
+    return Scaffold(
+       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'Home\nLocation',
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'FontStyle'),
+        ),
+       ),
+  body:   SingleChildScrollView(
       child: Column(
         children: [
           GestureDetector(
@@ -171,6 +185,7 @@ class ScreenFirst extends StatelessWidget {
           )
         ],
       ),
+  ),
     );
   }
 }

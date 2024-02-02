@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -7,6 +8,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+       
       body: Column(
         children: [
           Stack(
@@ -61,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 20,
+            height: 25,
           ),
 
           const Padding(
@@ -79,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                 ],
               )),
           const SizedBox(
-            height: 20,
+            height: 25,
           ),
           const Padding(
             padding: EdgeInsets.only(left: 25),
@@ -97,7 +99,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
            const SizedBox(
-            height: 20,
+            height: 25,
           ),
 
          const Padding(
@@ -116,25 +118,30 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
            const SizedBox(
-            height: 20,
+            height: 25,
           ),
-           const Padding(
-            padding: EdgeInsets.only(left: 25),
-            child: Row(
-              children: [
-                Icon(Icons.share),
-                SizedBox(width: 20),
-                Text(
-                  'Share ',
-                  style: TextStyle(
-                    fontSize: 16,
+            InkWell(
+            onTap: (){
+             Share.share('am happy');
+            },
+             child: const Padding(
+              padding: EdgeInsets.only(left: 25),
+              child: Row(
+                children: [
+                  Icon(Icons.share),
+                  SizedBox(width: 20),
+                  Text(
+                    'Share ',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
+                ],
+              ),
+                       ),
+           ),
            const SizedBox(
-            height: 20,
+            height: 25,
           ),
            const Padding(
             padding: EdgeInsets.only(left: 25),
@@ -152,14 +159,14 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
                      const SizedBox(
-            height: 20,
+            height: 25,
           ),
            const Padding(
             padding: EdgeInsets.only(left: 25),
             child: Row(
               children: [
                 Icon(Icons.logout),
-                SizedBox(width: 20),
+                SizedBox(width: 25),
                 Text(
                   'Log Out ',
                   style: TextStyle(

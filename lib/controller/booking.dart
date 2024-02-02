@@ -9,6 +9,7 @@ import 'package:user_dinny/model/booking_model.dart';
 
 class NewBookingController extends GetxController {
   TextEditingController guestcounController = TextEditingController();
+
 final RxBool isSelected = false.obs;
 final RxString selectedValue=''.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
@@ -31,7 +32,7 @@ final RxString selectedValue=''.obs;
   void selectTableType(int? value) {
     selectedTableType.value = value ?? 2;
   }
-
+// ------------------------------------------------------------------------
   
   Future<bool> addbookToFirestore(
     String restaurantId,
@@ -42,9 +43,9 @@ final RxString selectedValue=''.obs;
         'restaurantId': restaurantId,
         'date': DateTime.now().toLocal(),
         'time': DateTime.now().toLocal(),
-        'tableType': tableType, // Update with the actual table type
+        'tableType': tableType, 
         'guestCount': int.parse(guestcounController.text),
-        // Add more details as needed
+       
       });
       log('book details added to Firestore');
       return true;
@@ -53,7 +54,7 @@ final RxString selectedValue=''.obs;
       return false;
     }
   }
-
+// -----------------------------------------------------------------------
   Future<bool> newbooking(BookingModel book) async {
     Map<String, dynamic> bookinfo = {
       ' date': book.date,

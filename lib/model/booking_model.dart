@@ -7,6 +7,7 @@ class BookingModel {
   final String userName;
   final String phoneNumber;
   final String resturentId;
+  final String profileImage;
 
   BookingModel({
   required this.resturentId, 
@@ -16,5 +17,6 @@ class BookingModel {
       required this.guestCount,
       required this.userId,
       required this.userName,
-      required this.phoneNumber});
+      required this.phoneNumber,
+      required this.profileImage});
 }

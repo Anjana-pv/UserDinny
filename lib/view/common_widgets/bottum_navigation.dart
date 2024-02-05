@@ -1,4 +1,5 @@
  import 'package:get/get.dart';
+import 'package:user_dinny/view/booking_history.dart';
 import 'package:user_dinny/view/home_screen.dart';
 import 'package:user_dinny/view/profile_screen.dart';
 import 'package:user_dinny/view/search_screen.dart';
@@ -10,7 +11,8 @@ void onTabTapped(int index) {
 
       break;
     case 1:
-     // BookingScreen(id: id, data: data); 
+   
+      ScreenBookingHistory();
       
       break;
     case 2:Get.to(const SearchScreen());

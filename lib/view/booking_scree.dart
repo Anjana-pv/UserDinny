@@ -12,7 +12,6 @@ import 'package:user_dinny/controller/booking.dart';
 import 'package:user_dinny/controller/calender.dart';
 import 'package:user_dinny/view/booking_conformation_screen.dart';
 
-
 GlobalKey<FormState> tableformKey = GlobalKey<FormState>();
 TimeOfDay? selectedTime;
 String? selectedTableType;
@@ -37,7 +36,7 @@ class BookingScreen extends StatelessWidget {
     final BookingController bookingcontroller = Get.put(BookingController());
     final NewBookingController newbooking = Get.put(NewBookingController());
     double paddingMultiplier = MediaQuery.of(context).size.width * 0.05;
-  UserController auth=Get.put(UserController());
+    UserController auth = Get.put(UserController());
 
     return Obx(
       () => Scaffold(
@@ -232,20 +231,22 @@ class BookingScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      
-                 final Map<String, dynamic> userData=await auth.getuserdata();
-                 
+                      final Map<String, dynamic> userData =
+                          await auth.getuserdata();
+
                       Get.to(BookingConfirmation(
                         userData: userData,
-                          restaurantName: data['restaurantName'],
-                          location: data['city'],
-                          bookingTime: timeSlotController.selectedTimeSlot.value
-                              .toString(),
-                          bookingDate: selectedDate.toString(),
-                          guestCount: newbooking.guestcounController.text,
-                          restaurantId: id,
-                          tableType: newbooking.selectedTableType.string,
-                          email: data['email'] ?? ''));
+                        restaurantName: data['restaurantName'],
+                        location: data['city'],
+                        bookingTime: timeSlotController.selectedTimeSlot.value
+                            .toString(),
+                        bookingDate: selectedDate.toString(),
+                        guestCount: newbooking.guestcounController.text,
+                        restaurantId: id,
+                        tableType: newbooking.selectedTableType.string,
+                        email: data['email'] ?? '',
+                        profileImage: data['profileImage'] ?? '',
+                      ));
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(

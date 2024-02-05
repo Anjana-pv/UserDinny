@@ -1,39 +1,33 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/controller/profile_controller.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-class BookingController extends GetxController {
-  final Rx<Stream<QuerySnapshot<Object?>>> bookingStream =
+class ProfileController extends GetxController {
+  final Rx<Stream<QuerySnapshot<Object?>>> profileStream =
       Rx<Stream<QuerySnapshot<Object?>>>(const Stream.empty());
-  
 
   @override
   void onInit() {
     super.onInit();
-   getuserdata();
-
-  
+    log('Controller initialized');
+    getuserdata();
   }
 
-  Stream<QuerySnapshot<Object?>> getBooking(userId) {
+  Stream<QuerySnapshot<Object?>> getResturentDatas(userId) {
     final CollectionReference resturentCollection =
-        FirebaseFirestore.instance.collection('users').doc(userId).collection('user_bookings');
+        FirebaseFirestore.instance.collection('users');
     final Stream<QuerySnapshot<Object?>> resturentStream =
         resturentCollection.snapshots();
 
     return resturentStream;
   }
 
-   Future<void> getuserdata() async {
+  Future<void> getuserdata() async {
     SharedPreferences getuserId = await SharedPreferences.getInstance();
 
     final userId = getuserId.getString('getuser_id');
-    bookingStream.value = getBooking(userId);
+    profileStream.value = getResturentDatas(userId);
   }
-  
-  
 }
-

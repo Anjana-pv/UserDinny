@@ -42,11 +42,11 @@ class BookingConfirmation extends StatelessWidget {
           'Show Booking Details',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        actions: const [],
+      
       ),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: const Color.fromARGB(255, 208, 206, 206),
       body: Padding(
-        padding: const EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.only(top: 20),
         child: Column(
           children: [
             Container(
@@ -55,6 +55,7 @@ class BookingConfirmation extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
+
               ),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,17 +63,18 @@ class BookingConfirmation extends StatelessWidget {
                     Text(
                       restaurantName,
                       style: const TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 10, 10, 10),
                       ),
                     ),
-                    const SizedBox(height: 8.0),
+                    const SizedBox(height: 5.0),
                     Text(
                       location,
                       style: const TextStyle(
+                        color:Colors.grey,
                         fontSize: 18.0,
-                        color: Color.fromARGB(255, 0, 0, 0),
+                       
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -82,8 +84,8 @@ class BookingConfirmation extends StatelessWidget {
                         Row(
                           children: [
                             Icon(
-                              Icons.person_outline_sharp,
-                              color: Color.fromARGB(255, 9, 9, 9),
+                              Icons.people,
+                              color:  Color.fromARGB(255, 178, 18, 18),
                             ),
                             SizedBox(width: 8.0),
                             Text(
@@ -98,7 +100,7 @@ class BookingConfirmation extends StatelessWidget {
                         Row(
                           children: [
                             Icon(Icons.calendar_month,
-                                color: Color.fromARGB(255, 0, 0, 0)),
+                                color: Color.fromARGB(255, 178, 18, 18)),
                             SizedBox(width: 8.0),
                             Text(
                               'Date & Time',

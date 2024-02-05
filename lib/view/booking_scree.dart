@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'dart:ffi';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/view/common_widgets/client_details_container.dart';
 import 'package:user_dinny/view/common_widgets/custom_widgets.dart';
@@ -33,7 +35,7 @@ class BookingScreen extends StatelessWidget {
         Get.put(NewBookingController());
 
     DateTime selectedDate = DateTime.now();
-    final BookingController bookingcontroller = Get.put(BookingController());
+     BookingController booking = Get.put(BookingController());
     final NewBookingController newbooking = Get.put(NewBookingController());
     double paddingMultiplier = MediaQuery.of(context).size.width * 0.05;
     UserController auth = Get.put(UserController());
@@ -121,9 +123,10 @@ class BookingScreen extends StatelessWidget {
                           if (pickedDate != null &&
                               pickedDate != selectedDate) {
                             selectedDate = pickedDate;
-                            bookingcontroller.selectedDate(selectedDate);
+                            booking.selectedDate(selectedDate);
                           }
-                          log("$selectedDate");
+                           booking. formattedDate.value = DateFormat('d MMM y').format(selectedDate);
+                           log("${booking.formattedDate.value }");
                         },
                         child: const Padding(
                           padding: EdgeInsets.only(right: 30),
@@ -238,9 +241,8 @@ class BookingScreen extends StatelessWidget {
                         userData: userData,
                         restaurantName: data['restaurantName'],
                         location: data['city'],
-                        bookingTime: timeSlotController.selectedTimeSlot.value
-                            .toString(),
-                        bookingDate: selectedDate.toString(),
+                        bookingTime: timeSlotController.selectedTimeSlot.value .toString(),
+                        bookingDate: booking.formattedDate.value ,
                         guestCount: newbooking.guestcounController.text,
                         restaurantId: id,
                         tableType: newbooking.selectedTableType.string,

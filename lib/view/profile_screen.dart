@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:user_dinny/controller/profile_controller.dart';
 import 'package:user_dinny/view/edit%20_screen.dart';
 
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
     super.key,
@@ -62,15 +63,14 @@ class ProfileScreen extends StatelessWidget {
                               const SizedBox(height: 10),
                               Text( 
                                  userData['userName'] ?? '', 
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
                               const SizedBox(height: 5),
                                Text( userData['phoneNumber'] ?? '',
-
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white)),
@@ -120,7 +120,8 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      const EditScreen();
+                 Get.to (
+                  EditScreen());
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(left: 25),

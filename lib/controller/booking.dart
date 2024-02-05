@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_dinny/model/booking_model.dart';
 
 class NewBookingController extends GetxController {
+  
   TextEditingController guestcounController = TextEditingController();
   Stream<QuerySnapshot<Object?>> bookingStream = const Stream.empty();
     Stream<QuerySnapshot<Object?>> bookdata = const Stream.empty();

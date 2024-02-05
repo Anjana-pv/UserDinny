@@ -5,7 +5,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class BookingController extends GetxController {
+class BookingHistory extends GetxController {
   final Rx<Stream<QuerySnapshot<Object?>>> bookingStream =
       Rx<Stream<QuerySnapshot<Object?>>>(const Stream.empty());
   

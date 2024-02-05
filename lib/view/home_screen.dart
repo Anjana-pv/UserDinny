@@ -16,11 +16,11 @@ class HomeScreen extends StatelessWidget {
     return Obx(() => Scaffold(
           body: IndexedStack(
             index: usercontroller.selectedIndex.value,
-            children:  <Widget>[
-              const ScreenFirst(),
+            children:  const <Widget>[
+              ScreenFirst(),
               ScreenBookingHistory(),
-              const SearchScreen(),
-              const ProfileScreen(),
+              SearchScreen(),
+              ProfileScreen(),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(

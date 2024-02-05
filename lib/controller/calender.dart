@@ -2,8 +2,11 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class BookingController extends GetxController {
+
+   Rx<String> formattedDate=''.obs;
   Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
 
   Future<void> onDaySelected(DateTime selectedDay) async {
@@ -14,9 +17,10 @@ class BookingController extends GetxController {
     try {
       DateTime? date = selectedDate.value;
       if (date != null) {
+         
         await FirebaseFirestore.instance.collection('bookings').add({
-          'date': date,
-          // Add other necessary fields for your booking
+          'date':date,
+          
         });
         Get.snackbar('Booking Successful', 'Your date is booked.');
       } else {

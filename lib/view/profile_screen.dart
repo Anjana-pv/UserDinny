@@ -19,7 +19,11 @@ class ProfileScreen extends StatelessWidget {
         stream: profileInstance.profileStream.value,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return const SizedBox(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else if (snapshot.hasData) { 

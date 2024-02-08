@@ -3,11 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 class UserController extends GetxController {
+
+
   final db = FirebaseFirestore.instance;
-  RxString name = ''.obs;
-  RxString email = ''.obs;
-  RxString phoneNumber = ''.obs;
+  
 
   Stream<QuerySnapshot> getAccepted() {
     final CollectionReference accepted =
@@ -73,12 +74,8 @@ class UserController extends GetxController {
       }
     }
   }
-   Future<void> updateBookingData(String userId, Map<String, dynamic> updatedData) async {
-    try {
-      await db.collection('users').doc(userId ).update(updatedData);
-      log('Booking data updated successfully!');
-    } catch (e) {
-      log('Error updating booking data: $e');
-    }
-  }
+
+
+ 
+
 }

@@ -16,7 +16,7 @@ class _RazorpayScreeenState extends State<RazorpayScreeen> {
   void openamount(amount)async{
     amount=amount*100;
     var options ={
-      'key':'rzp_tes',
+      'key':'rzp_test_mYEIb1JhBAjCQk',
       'amount':amount,
       'name':"Our_Dinny",
       'prefill':{"contact":'1234567890','email':'text@gmail.com'},

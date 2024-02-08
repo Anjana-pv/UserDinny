@@ -12,7 +12,7 @@ class NewBookingController extends GetxController {
   
   TextEditingController guestcounController = TextEditingController();
   Stream<QuerySnapshot<Object?>> bookingStream = const Stream.empty();
-    Stream<QuerySnapshot<Object?>> bookdata = const Stream.empty();
+   Stream<QuerySnapshot<Object?>> bookdata = const Stream.empty();
   final RxBool isSelected = false.obs;
   final RxString selectedValue = ''.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
@@ -103,7 +103,7 @@ class NewBookingController extends GetxController {
     bookingStream = getResturentDatas(userId);
     return bookingStream;
   } catch (e) {
-    // Handle error or return a default stream
+ 
     return Stream.empty();
   }
 }
@@ -136,4 +136,17 @@ class NewBookingController extends GetxController {
  bookdata=  fetchBookingData(userId);
  log('$bookdata');
   }
+
+  Stream<QuerySnapshot<Object?>> getoffers(resturentId) {
+    final CollectionReference resturentCollection = FirebaseFirestore.instance
+        .collection('approvedOne')
+        .doc(resturentId)
+        .collection('offerdimg');
+    final resturentStream = resturentCollection.snapshots();
+    return resturentStream;
+  }
+
+
+
+
 }

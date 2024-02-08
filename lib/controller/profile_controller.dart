@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,10 +23,28 @@ class ProfileController extends GetxController {
     return resturentStream;
   }
 
+
   Future<void> getuserdata() async {
     SharedPreferences getuserId = await SharedPreferences.getInstance();
-
     final userId = getuserId.getString('getuser_id');
     profileStream.value = getResturentDatas(userId);
   }
+ 
+
+
+
+   Future<void> updateUserData(String userId, Map<String, dynamic> newData) async {
+    try {
+      final CollectionReference userCollection =
+          FirebaseFirestore.instance.collection('users');
+          await userCollection.doc(userId).update(newData);
+
+      log('User data updated successfully!');
+    } catch (e) {
+      log('Error updating user data: $e');
+    }
+  }
 }
+  
+ 
+

@@ -15,7 +15,7 @@ void onTabTapped(int index) {
       ScreenBookingHistory();
       
       break;
-    case 2:Get.to(const SearchScreen());
+    case 2:Get.to( SearchScreen());
       break;
     case 3:
    

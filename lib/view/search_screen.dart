@@ -1,24 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/controller/booking.dart';
-import 'package:user_dinny/controller/booking_history.dart';
-import 'package:user_dinny/view/home_screen.dart';
+import 'package:user_dinny/controller/search_controller.dart';
+import 'package:user_dinny/view/home_screen.dart'; // Import your SearchController
 
-class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
-
-  @override
-  SearchScreenState createState() => SearchScreenState();
-}
-
-class SearchScreenState extends State<SearchScreen> {
-  final TextEditingController _searchController = TextEditingController();
-  NewBookingController book = NewBookingController();
-  String _searchQuery = '';
+class SearchScreen extends StatelessWidget {
+  final TextEditingController searchController = TextEditingController();
+final searchInstance=Get.put(SearchGetController()); 
+  SearchScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -30,7 +24,7 @@ class SearchScreenState extends State<SearchScreen> {
         ),
         leading: IconButton(
           onPressed: () {
-            Get.to(const HomeScreen());
+            Get.to( HomeScreen());
           },
           icon: const Icon(Icons.arrow_back_ios_rounded),
         ),
@@ -40,50 +34,34 @@ class SearchScreenState extends State<SearchScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              controller: _searchController,
+              controller: searchController,
               decoration: const InputDecoration(
-                hintText: 'Search restaurants, table type ',
+                hintText: 'Search restaurants, table type',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
                 ),
               ),
               onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
+                log('$value');
+                searchInstance.search(value);
               },
             ),
           ),
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('approvedOne')
-                  .where('itemName',
-                      isGreaterThanOrEqualTo: _searchQuery.toLowerCase())
-                  .where('itemName',
-                      isLessThan: _searchQuery.toLowerCase() + 'z')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
-
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                var searchList = snapshot.data!.docs;
-
+            child: Obx(() {
+              if (searchInstance.searchResults.isEmpty) {
+                return const Center(child: Text('No results found'));
+              } else {
                 return ListView.builder(
-                  itemCount: searchList.length,
+                  itemCount: searchInstance.searchResults.length,
                   itemBuilder: (context, index) {
-                    var title = searchList[index]['Title'];
+                    var title = searchInstance.searchResults[index]['Title']; 
                     return Text(title.toString());
                   },
                 );
-              },
-            ),
+              }
+            }),
           ),
         ],
       ),

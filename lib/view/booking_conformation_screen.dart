@@ -7,19 +7,19 @@ import 'package:user_dinny/view/home_screen.dart';
 import 'package:user_dinny/view/payment.dart';
 
 class BookingConfirmation extends StatelessWidget {
-  const BookingConfirmation({
-    Key? key,
-    required this.restaurantName,
-    required this.location,
-    required this.bookingTime,
-    required this.bookingDate,
-    required this.guestCount,
-    required this.restaurantId,
-    required this.tableType,
-    required this.email,
-    required this.userData,
-    required this.profileImage
-  }) : super(key: key);
+  const BookingConfirmation(
+      {Key? key,
+      required this.restaurantName,
+      required this.location,
+      required this.bookingTime,
+      required this.bookingDate,
+      required this.guestCount,
+      required this.restaurantId,
+      required this.tableType,
+      required this.email,
+      required this.userData,
+      required this.profileImage})
+      : super(key: key);
 
   final String restaurantName;
   final String location;
@@ -42,11 +42,10 @@ class BookingConfirmation extends StatelessWidget {
           'Show Booking Details',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-      
       ),
       backgroundColor: const Color.fromARGB(255, 208, 206, 206),
       body: Padding(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
             Container(
@@ -55,7 +54,6 @@ class BookingConfirmation extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
-
               ),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,13 +66,12 @@ class BookingConfirmation extends StatelessWidget {
                         color: Color.fromARGB(255, 10, 10, 10),
                       ),
                     ),
-                    const SizedBox(height: 5.0),
+                    const SizedBox(height: 3.0),
                     Text(
                       location,
                       style: const TextStyle(
-                        color:Colors.grey,
+                        color: Colors.grey,
                         fontSize: 18.0,
-                       
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -85,7 +82,7 @@ class BookingConfirmation extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.people,
-                              color:  Color.fromARGB(255, 178, 18, 18),
+                              color: Color.fromARGB(255, 178, 18, 18),
                             ),
                             SizedBox(width: 8.0),
                             Text(
@@ -120,7 +117,7 @@ class BookingConfirmation extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "$guestCount Guests \n $tableType seats",
+                          "$guestCount  Guests \n$tableType  Seats",
                           style: const TextStyle(
                             fontSize: 16.0,
                             color: Color.fromARGB(255, 0, 0, 0),
@@ -141,7 +138,7 @@ class BookingConfirmation extends StatelessWidget {
                   ]),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Container(
               height: 100,
@@ -151,39 +148,33 @@ class BookingConfirmation extends StatelessWidget {
                 color: const Color.fromARGB(255, 255, 255, 255),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(11.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('User Detail',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                    
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Name"),
-                              Text("Contact"),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(" : ${userData['username'] ?? ''}"),
-                              Text(" : ${userData['phoneNumber'] ?? ''}"),
-                            ],
-                          ),
-                        ],
-                      ),
+                    const Text(
+                      'User Detail',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Row(
+                      children: [
+                        const Text("Name"),
+                        Text("    : ${userData['username'] ?? ''}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text("Contact"),
+                        Text(" : ${userData['phoneNumber'] ?? ''}"),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Container(
               height: 150,
@@ -192,40 +183,42 @@ class BookingConfirmation extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 color: const Color.fromARGB(255, 255, 255, 255),
               ),
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    const Text(
                       '* To secure your booking, there is a booking fee of Rs 200. This fee will be deducted from your final bill payment.',
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.to(const RazorpayScreeen());
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                          return const Color.fromARGB(123, 20, 77, 14);
-                        },
-                      ),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size(300, 40)),
-                      // Adjust the size as needed
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.to(const RazorpayScreeen());
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            return const Color.fromARGB(123, 20, 77, 14);
+                          },
+                        ),
+                        minimumSize:
+                            MaterialStateProperty.all(const Size(300, 40)),
+                        // Adjust the size as needed
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
                         ),
                       ),
+                      child: const Text(
+                        'Advance Payment',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                    child: const Text(
-                      'Advance Payment',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(
@@ -242,7 +235,7 @@ class BookingConfirmation extends StatelessWidget {
                     userName: userData['username'],
                     phoneNumber: userData['phoneNumber'],
                     resturentId: restaurantId,
-                     profileImage:profileImage );
+                    profileImage: profileImage);
                 final responce = await newbooking.newbooking(bookingData);
                 Get.to(const HomeScreen());
                 log('$responce');

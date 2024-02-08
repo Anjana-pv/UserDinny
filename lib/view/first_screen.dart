@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user_dinny/controller/booking.dart';
 import 'package:user_dinny/view/common_widgets/custom_widgets.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/styling/textsytling.dart';
@@ -17,9 +18,9 @@ class ScreenFirst extends StatelessWidget {
     double containerHeightMultiplier = MediaQuery.of(context).size.height * 0.2;
     double textSizeMultiplier = MediaQuery.of(context).size.width * 0.04;
 
-    // final user = FirebaseAuth.instance.currentUser;
+
     final usercontroller = Get.put(UserController());
-    
+    final offerimage=Get.put(NewBookingController());
    
     return Scaffold(
        appBar: AppBar(
@@ -37,7 +38,7 @@ class ScreenFirst extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(const SearchScreen());
+              Get.to( SearchScreen());
             },
             child: Container(
               padding: EdgeInsets.only(
@@ -51,7 +52,8 @@ class ScreenFirst extends StatelessWidget {
                     child: TextField(
                       onTap: () {
                         FocusManager.instance.primaryFocus?.unfocus();
-                        Get.to(const SearchScreen());
+                           
+                        // Get.to( SearchScreen());
                       },
                       decoration: const InputDecoration(
                         hintText: 'Search...',
@@ -181,11 +183,44 @@ class ScreenFirst extends StatelessWidget {
             height: 200,
             width: 300,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20), color: Colors.amber),
-          )
+                borderRadius: BorderRadius.circular(20),
+                 ),
+         child: StreamBuilder(
+    stream:offerimage.bookdata,
+    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(child: const CircularProgressIndicator());
+      } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+        return Center(child: const Text('No offers available'));
+      } else if (snapshot.hasError) {
+        return Center(child: Text('Error: ${snapshot.error}'));
+      } else {
+        return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: snapshot.data!.docs.length,
+          itemBuilder: (context, index) {
+            DocumentSnapshot document = snapshot.data!.docs[index];
+            Map<String, dynamic> offerData = document.data() as Map<String, dynamic>;
+            String offerImageUrl = offerData['imageUrl'] ?? '';
+           
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network(
+                offerImageUrl,
+                height: 150,
+                width: 150,
+                fit: BoxFit.cover,
+              ),
+            );
+          },
+        );
+      }
+    },
+  ),
+)
         ],
       ),
-  ),
+  )
     );
   }
 }

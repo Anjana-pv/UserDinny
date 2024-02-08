@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 class EditScreen extends StatelessWidget {
@@ -20,12 +22,7 @@ class EditScreen extends StatelessWidget {
                 ),
               ),
               
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 50,left: 30),
-              //   child: const Row(
-              //     children: [Text('E,)],
-              //   ),
-              // ),
+             
               const Positioned(
                 top: 100,
                 left: 0,
@@ -51,7 +48,6 @@ class EditScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
-                  
                   decoration: const InputDecoration(
                     labelText: 'Name'),
                     
@@ -86,7 +82,7 @@ class EditScreen extends StatelessWidget {
 
             child: ElevatedButton(
               onPressed: () {
-                // Add your button press logic here
+               
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(

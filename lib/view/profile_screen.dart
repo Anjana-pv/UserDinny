@@ -2,11 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:user_dinny/controller/booking_history.dart';
 import 'package:user_dinny/controller/profile_controller.dart';
-import 'package:user_dinny/view/booking_history.dart';
 import 'package:user_dinny/view/edit%20_screen.dart';
-import 'package:user_dinny/view/home_screen.dart';
+
 
 
 class ProfileScreen extends StatelessWidget {

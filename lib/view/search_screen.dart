@@ -63,13 +63,24 @@ class SearchScreen extends StatelessWidget {
                         Get.forceAppUpdate();
                       },
                     ),
+                    SizedBox(height: 20,),
                     Expanded(
                       child: ListView.builder(
                         itemCount: filteredResturents.length,
                         itemBuilder: (context, index) {
                           var restaurant = filteredResturents[index];
-                          return Text(
-                            "${filteredResturents[index]['restaurantName']}",
+                          return ListTile(
+                            leading: Image.network(
+                              restaurant[
+                                  'profileImage'], 
+                              width: 50, 
+                              height: 50, 
+                              fit: BoxFit
+                                  .cover, 
+                            ),
+                            title: Text(
+                              "${restaurant['restaurantName']}",
+                            ),
                           );
                         },
                       ),

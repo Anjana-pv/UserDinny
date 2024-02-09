@@ -50,92 +50,95 @@ class BookingConfirmation extends StatelessWidget {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(14.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
               ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      restaurantName,
-                      style: const TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 10, 10, 10),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        restaurantName,
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 10, 10, 10),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 3.0),
-                    Text(
-                      location,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 18.0,
+                      const SizedBox(height: 2.0),
+                      Text(
+                        location,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15.0,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.people,
-                              color: Color.fromARGB(255, 178, 18, 18),
-                            ),
-                            SizedBox(width: 8.0),
-                            Text(
-                              'Guest count',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                color: Color.fromARGB(255, 8, 8, 8),
+                      const SizedBox(height: 20),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.people,
+                                color: Color.fromARGB(255, 178, 18, 18),
                               ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.calendar_month,
-                                color: Color.fromARGB(255, 178, 18, 18)),
-                            SizedBox(width: 8.0),
-                            Text(
-                              'Date & Time',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                color: Color.fromARGB(255, 0, 0, 0),
+                              SizedBox(width: 8.0),
+                              Text(
+                                'Guest count',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Color.fromARGB(255, 8, 8, 8),
+                                ),
                               ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.calendar_month,
+                                  color: Color.fromARGB(255, 178, 18, 18)),
+                              SizedBox(width: 6.0),
+                              Text(
+                                'Date & Time',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "$guestCount  Guests \n$tableType  Seats",
+                            style: const TextStyle(
+                              fontSize: 15.0,
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "$guestCount  Guests \n$tableType  Seats",
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 100,
-                        ),
-                        Text(
-                          '$bookingDate\n$bookingTime',
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                            color: Color.fromARGB(255, 1, 1, 1),
+                          const SizedBox(
+                            width: 100,
                           ),
-                        ),
-                      ],
-                    ),
-                  ]),
+                          Text(
+                            '$bookingDate\n$bookingTime',
+                            style: const TextStyle(
+                              fontSize: 15.0,
+                              color: Color.fromARGB(255, 1, 1, 1),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]),
+              ),
             ),
             const SizedBox(
               height: 10,

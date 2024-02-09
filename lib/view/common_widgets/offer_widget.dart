@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:user_dinny/controller/booking.dart';
 
-PageController pageController = PageController();
-bool onLastPage = false;
-
 class OfferWidget extends StatelessWidget {
-  const OfferWidget({
-    super.key,
+   OfferWidget({
+    Key? key,
     required this.offerimage,
-  });
+  }) : super(key: key);
 
   final NewBookingController offerimage;
+  final RxInt myCurrentIndex = 0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -37,29 +37,49 @@ class OfferWidget extends StatelessWidget {
 
             return Stack(
               children: [
-                PageView(
-                  controller: pageController,
-                  onPageChanged: (index) {
-                    onLastPage = (index == 1);
+                CarouselSlider.builder(
+                  itemCount: document.length,
+                  itemBuilder: (context, index, realIndex) {
+                    return Image.network(
+                      document[index]['imageUrl'] ?? '',
+                      height: 100,
+                      width: 300,
+                      fit: BoxFit.contain,
+                    );
                   },
-                  children: [
-                    Image.network(document[0]['imageUrl'] ?? '',
-                        height: 200, width: 300, fit: BoxFit.contain),
-                    Image.network(document[1]['imageUrl'] ?? '',
-                        height: 200, width: 300, fit: BoxFit.contain),
-                    Image.network(document[2]['imageUrl'] ?? '',
-                        height: 200, width: 300, fit: BoxFit.contain),
-                  ],
+                  options: CarouselOptions(
+                    autoPlay: true,
+                    height: 200,
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                    autoPlayInterval: const Duration(seconds: 2),
+                    enlargeCenterPage: true,
+                    aspectRatio: 2.0,
+                    onPageChanged: (index, reason) {
+                      myCurrentIndex.value = index;
+                    },
+                  ),
                 ),
-                Container(
-                    alignment: const Alignment(0, 0.95),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SmoothPageIndicator(
-                            controller: pageController, count: 3),
-                      ],
-                    ))
+                Padding(
+                  padding: const EdgeInsets.only(top: 210),
+                  
+
+
+                  child: Center(
+                    child: Obx(() => AnimatedSmoothIndicator(
+                      activeIndex: myCurrentIndex.value,
+                      count: document.length,
+                      effect: const WormEffect(
+                        dotHeight: 8,
+                        dotWidth: 8,
+                        spacing: 10,
+                        dotColor: Colors.grey,
+                        activeDotColor: Colors.black,
+                        paintStyle: PaintingStyle.fill,
+                      ),
+                    )),
+                  ),
+                ),
               ],
             );
           }
@@ -68,19 +88,3 @@ class OfferWidget extends StatelessWidget {
     );
   }
 }
-// ListView.builder(
-//               scrollDirection: Axis.horizontal,
-//               itemCount: snapshot.data!.docs.length,
-//               itemBuilder: (context, index) {
-//                 DocumentSnapshot document = snapshot.data!.docs[index];
-//                 Map<String, dynamic> offerData =
-//                     document.data() as Map<String, dynamic>;
-//                 String offerImageUrl = offerData['imageUrl'] ?? '';
-
-//                 return Padding(
-//                   padding: const EdgeInsets.all(8.0),
-//                   child: Image.network(offerImageUrl,
-//                       height: 200, width: 300, fit: BoxFit.contain),
-//                 );
-//               },
-//             );

@@ -12,8 +12,8 @@ class Detailcontainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.2,
-      width: MediaQuery.of(context).size.width * 0.8,
+      height: MediaQuery.of(context).size.height * 0.15,
+      width: MediaQuery.of(context).size.width * 0.7,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
@@ -105,25 +105,7 @@ class Detailcontainer extends StatelessWidget {
             padding: const EdgeInsets.only(
               left: 20,
             ),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.location_city,
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  size: 16,
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  ' ${data['workingHours']} hr',
-    
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+           
           ),
         ],
       ),

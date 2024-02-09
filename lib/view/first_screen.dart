@@ -7,7 +7,6 @@ import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/styling/textsytling.dart';
 import 'package:user_dinny/view/booking_scree.dart';
 import 'package:user_dinny/view/common_widgets/offer_widget.dart';
-import 'package:user_dinny/view/sample.dart';
 import 'package:user_dinny/view/search_screen.dart';
 
 class ScreenFirst extends StatelessWidget {
@@ -38,7 +37,7 @@ class ScreenFirst extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.to(SearchScreen());
+                  Get.to(const SearchScreen());
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -53,7 +52,7 @@ class ScreenFirst extends StatelessWidget {
                           onTap: () {
                             FocusManager.instance.primaryFocus?.unfocus();
 
-                            Get.to(SearchScreen());
+                            Get.to(const SearchScreen());
                           },
                           decoration: const InputDecoration(
                             hintText: 'Search...',
@@ -186,6 +185,7 @@ class ScreenFirst extends StatelessWidget {
                 height: 20,
               ),
               OfferWidget(offerimage: offerimage)
+              // MyCards(),
             ],
           ),
         ));

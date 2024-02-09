@@ -13,7 +13,7 @@ class ScreenBookingHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BookingHistory fetchBookingData = Get.put(BookingHistory());
-    UserController bookingManaging = Get.put(UserController());
+    // UserController bookingManaging = Get.put(UserController());
 
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +73,9 @@ class ScreenBookingHistory extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Row(
+                              profileimage.isEmpty
+                              ?const CircularProgressIndicator()
+                              :Row(
                                 children: [
                                   Container(
                                     height: MediaQuery.of(context).size.height *

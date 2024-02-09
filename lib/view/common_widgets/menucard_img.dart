@@ -44,11 +44,8 @@ class MenuImageview extends StatelessWidget {
                     child:SizedBox(
                         width: 20.0,
                         height: 20.0,
-                        child: CircularProgressIndicator(
-                              color: Color.fromARGB(255, 11, 49, 13),
-                              backgroundColor:Color.fromARGB(255, 248, 248, 247),
-                              value: 0.20,  
-                        ),
+                        child: CircularProgressIndicator(),
+                        
                         ),
                         ),
                     errorWidget: (context, url, error) =>

@@ -69,7 +69,7 @@ import 'package:flutter/material.dart';
         child: Text('Six-Top'),
       ),
       const DropdownMenuItem<int>(
-        value: 6,
+        value: 12,
         child: Text('Twelve-Top'),
       ),
     

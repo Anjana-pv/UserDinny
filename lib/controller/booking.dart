@@ -146,6 +146,14 @@ class NewBookingController extends GetxController {
     return resturentStream;
   }
 
+  Stream<QuerySnapshot<Object?>>  getoffering() {
+    final CollectionReference accepted =
+        FirebaseFirestore.instance.collection('offers');
+    final acceptStream = accepted.snapshots();
+    return acceptStream;
+  }
+
+
 
 
 

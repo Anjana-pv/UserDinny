@@ -2,8 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:user_dinny/controller/booking_history.dart';
 import 'package:user_dinny/controller/profile_controller.dart';
+import 'package:user_dinny/view/booking_history.dart';
 import 'package:user_dinny/view/edit%20_screen.dart';
+import 'package:user_dinny/view/home_screen.dart';
 
 
 class ProfileScreen extends StatelessWidget {
@@ -67,14 +70,14 @@ class ProfileScreen extends StatelessWidget {
                               const SizedBox(height: 10),
                               Text( 
                                  userData['userName'] ?? '', 
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
                               const SizedBox(height: 5),
                                Text( userData['phoneNumber'] ?? '',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white)),
@@ -87,45 +90,17 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(
                     height: 25,
                   ),
-                  const Padding(
-                      padding: EdgeInsets.only(left: 25),
-                      child: Row(
-                        children: [
-                          Icon(Icons.restaurant_menu),
-                          SizedBox(width: 20),
-                          Text(
-                            'Bookings',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      )),
+                  
                   const SizedBox(
                     height: 25,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 25),
-                    child: Row(
-                      children: [
-                        Icon(Icons.list_alt_rounded),
-                        SizedBox(width: 20),
-                        Text(
-                          'Transcations',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                 
                   InkWell(
                     onTap: () {
                  Get.to (
-                  EditScreen());
+                  EditScreen(username:userData['userName'] ?? '' , emailid: userData['email'] ?? '', phonenumber:  userData['phoneNumber'] ?? '',
+
+                  ));
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(left: 25),
@@ -143,6 +118,25 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                   const SizedBox(
+                    height: 25,
+                  ),
+                   const Padding(
+                    padding: EdgeInsets.only(left: 25),
+                    child: Row(
+                      children: [
+                        Icon(Icons.list_alt_rounded),
+                        SizedBox(width: 20),
+                        Text(
+                          'Terms and Conditions',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
                   const SizedBox(
                     height: 25,
                   ),
@@ -202,18 +196,25 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 90,
+                   const SizedBox(
+                    height: 25,
                   ),
-                  const Column(
-                    children: [
-                      Text(
-                        'Polices and privacy ',
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.normal),
-                      )
-                    ],
-                  )
+                  const Padding(
+                    padding: EdgeInsets.only(left: 25),
+                    child: Row(
+                      children: [
+                        Icon(Icons.policy),
+                        SizedBox(width: 25),
+                        Text(
+                          'Polices and privacy ',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                 
                 ],
               ),
             );

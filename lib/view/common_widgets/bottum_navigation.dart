@@ -7,15 +7,15 @@ import 'package:user_dinny/view/search_screen.dart';
 void onTabTapped(int index) {
   switch (index) {
     case 0:
-          HomeScreen();
+          const HomeScreen();
 
       break;
     case 1:
    
-      ScreenBookingHistory();
+      const ScreenBookingHistory();
       
       break;
-    case 2:Get.to( SearchScreen());
+    case 2:Get.to( const SearchScreen());
       break;
     case 3:
    

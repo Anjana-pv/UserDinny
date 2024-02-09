@@ -1,9 +1,15 @@
-
-
 import 'package:flutter/material.dart';
 
 class EditScreen extends StatelessWidget {
-  const EditScreen({super.key, });
+  const EditScreen({
+    super.key,
+    required this.username,
+    required this.emailid,
+    required this.phonenumber,
+  });
+  final String username;
+  final String emailid;
+  final String phonenumber;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +27,6 @@ class EditScreen extends StatelessWidget {
                       fit: BoxFit.cover),
                 ),
               ),
-              
-             
               const Positioned(
                 top: 100,
                 left: 0,
@@ -48,9 +52,8 @@ class EditScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Name'),
-                    
+                  controller: TextEditingController(text: username),
+                  decoration: const InputDecoration(labelText: 'Name'),
                 ),
               ),
             ],
@@ -60,6 +63,7 @@ class EditScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
+                  controller: TextEditingController(text: emailid),
                   decoration: const InputDecoration(labelText: 'Email ID'),
                 ),
               ),
@@ -70,6 +74,7 @@ class EditScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
+                  controller: TextEditingController(text: phonenumber),
                   decoration: const InputDecoration(labelText: 'Phone Number'),
                 ),
               ),
@@ -78,22 +83,18 @@ class EditScreen extends StatelessWidget {
           const SizedBox(height: 100),
           Padding(
             padding: const EdgeInsets.only(top: 200, left: 17, right: 8),
-
-
             child: ElevatedButton(
-              onPressed: () {
-               
-              },
+              onPressed: () {},
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                    Color.fromARGB(255, 3, 81, 12)), // Set the button color
+                    Color.fromARGB(255, 3, 81, 12)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                minimumSize: MaterialStateProperty.all<Size>(
-                    Size(double.infinity, 50)), // Set the width and height
+                minimumSize:
+                    MaterialStateProperty.all<Size>(Size(double.infinity, 50)),
               ),
               child:
                   Text('Save Changes', style: TextStyle(color: Colors.white)),

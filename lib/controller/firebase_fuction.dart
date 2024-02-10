@@ -3,12 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class UserController extends GetxController {
-
-
   final db = FirebaseFirestore.instance;
-  
 
   Stream<QuerySnapshot> getAccepted() {
     final CollectionReference accepted =
@@ -62,8 +58,6 @@ class UserController extends GetxController {
         final String username = userDataMap['userName'] ?? '';
         final String phoneNumber = userDataMap['phoneNumber'] ?? '';
 
-      
-
         return {
           'userId': userId,
           'username': username,
@@ -74,8 +68,5 @@ class UserController extends GetxController {
       }
     }
   }
-
-
- 
-
+  
 }

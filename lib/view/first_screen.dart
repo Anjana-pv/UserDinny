@@ -24,12 +24,15 @@ class ScreenFirst extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text(
-            'Home\nLocation',
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'FontStyle'),
+          title: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'Home',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'FontStyle'),
+            ),
           ),
         ),
         body: SingleChildScrollView(
@@ -130,7 +133,7 @@ class ScreenFirst extends StatelessWidget {
                 child: Row(
                   children: [
                     GoogleFontText(
-                        customeText: ' Choose Your Favariote',
+                        customeText: '  Your Favariote',
                         size: textSizeMultiplier,
                         type: FontWeight.normal),
                   ],
@@ -139,32 +142,29 @@ class ScreenFirst extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              GestureDetector(
-                // onTap: ()=>Get.to(AutoScrollListView()), 
-                child: SizedBox(
-                  height: containerHeightMultiplier * 0.35,
-                  child: Wrap(
-                    spacing: -0.0,
-                    runSpacing: 10.0,
-                    children: List.generate(5, (index) {
-                      List<String> imageslist = [
-                        'assest/images/Buffalo Chicken Salad.jpg',
-                        'assest/images/meals.jpg',
-                        'assest/images/veg.jpg',
-                        'assest/images/veg.jpg',
-                        'assest/images/veg.jpg',
-                      ];
-                
-                      return Padding(
-                        padding: EdgeInsets.all(paddingMultiplier * 0.5),
-                        child: CircleAvatar(
-                          radius: containerHeightMultiplier * 0.175,
-                          backgroundColor: Colors.blue,
-                          backgroundImage: AssetImage(imageslist[index]),
-                        ),
-                      );
-                    }),
-                  ),
+              SizedBox(
+                height: containerHeightMultiplier * 0.35,
+                child: Wrap(
+                  spacing: -0.0,
+                  runSpacing: 10.0,
+                  children: List.generate(5, (index) {
+                    List<String> imageslist = [
+                      'assest/images/rice.jpg',
+                      'assest/images/fast food.jpg',
+                      'assest/images/drinks.jpg',
+                      'assest/images/coofie.jpg',
+                      'assest/images/chinees.jpg'
+                    ];
+
+                    return Padding(
+                      padding: EdgeInsets.all(paddingMultiplier * 0.5),
+                      child: CircleAvatar(
+                        radius: containerHeightMultiplier * 0.175,
+                        backgroundColor: Colors.blue,
+                        backgroundImage: AssetImage(imageslist[index]),
+                      ),
+                    );
+                  }),
                 ),
               ),
               const SizedBox(
@@ -191,4 +191,3 @@ class ScreenFirst extends StatelessWidget {
         ));
   }
 }
-

@@ -4,14 +4,13 @@ import 'package:get/get.dart';
 import 'package:user_dinny/controller/booking_history.dart';
 import 'package:user_dinny/view/booking_scree.dart';
 
-
 class ScreenBookingHistory extends StatelessWidget {
   const ScreenBookingHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
     BookingHistory fetchBookingData = Get.put(BookingHistory());
-    // UserController bookingManaging = Get.put(UserController());
+ 
 
     return Scaffold(
       appBar: AppBar(
@@ -72,66 +71,75 @@ class ScreenBookingHistory extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               profileimage.isEmpty
-                              ?const CircularProgressIndicator()
-                              :Row(
-                                children: [
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.08,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: NetworkImage(profileimage),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10.0),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        ' Booking Details',
-                                        style: TextStyle(
-                                          fontSize: 17.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        'Guest $guestCount ',
-                                        style: const TextStyle(fontSize: 14.0),
-                                      ),
-                                      Text(
-                                        'Time: $bookingTime',
-                                        style: const TextStyle(fontSize: 14.0),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Date: $bookingDate',
-                                            style:
-                                                const TextStyle(fontSize: 14.0),
+                                  ? const CircularProgressIndicator()
+                                  : Row(
+                                      children: [
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.08,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: NetworkImage(profileimage),
+                                            ),
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text('Confirmed',
-                                        style: TextStyle(
-                                            color: Colors.green, fontSize: 15)),
-                                  )
-                                ],
-                              ),
+                                        ),
+                                        const SizedBox(width: 10.0),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Text(
+                                              ' Booking Details',
+                                              style: TextStyle(
+                                                fontSize: 17.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              'Guest $guestCount ',
+                                              style: const TextStyle(
+                                                  fontSize: 14.0),
+                                            ),
+                                            Text(
+                                              'Time: $bookingTime',
+                                              style: const TextStyle(
+                                                  fontSize: 14.0),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Date: $bookingDate',
+                                                  style: const TextStyle(
+                                                      fontSize: 14.0),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('Confirmed',
+                                              style: TextStyle(
+                                                  color: Colors.green,
+                                                  fontSize: 15)),
+                                        )
+                                      ],
+                                    ),
                               const Divider(
                                 thickness: 2,
                               ),
@@ -140,19 +148,45 @@ class ScreenBookingHistory extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   TextButton(
-                                    onPressed: () {
-                                      // Get.to(EditScreen(
-                                      //   id: bookingId,
-                                      //   bookingDate: bookingDate,
-                                      //   guestCount: guestCount,
-                                      //   bookingTime: bookingTime,
-                                      //   profileImage: profileimage,
-                                      // }));
-                                    },
+                                    onPressed: () {},
                                     child: const Text('Modify Order'),
                                   ),
                                   TextButton(
-                                    onPressed: () async {},
+                                    onPressed: () async {
+                                      // Show confirmation dialog
+                                      bool confirmed = await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Confirm Cancellation'),
+                                            content: const Text(
+                                                'Are you sure you want to cancel this order?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop(
+                                                      false);
+                                                },
+                                                child: const Text('No'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop(
+                                                      true); 
+                                                },
+                                                child: const Text('Yes'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      if (confirmed == true) {
+                                        BookingHistory fetchBookingData =
+                                            Get.find();
+                                        await fetchBookingData.cancelBooking(
+                                            bookingId, bookingData);
+                                      }
+                                    },
                                     child: const Text(
                                       'Cancel Order',
                                       style: TextStyle(color: Colors.red),

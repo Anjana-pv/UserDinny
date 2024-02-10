@@ -11,7 +11,9 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
     log('Controller initialized');
+   
     getuserdata();
+    
   }
 
   Stream<QuerySnapshot<Object?>> getResturentDatas(userId) {
@@ -19,10 +21,9 @@ class ProfileController extends GetxController {
         FirebaseFirestore.instance.collection('users');
     final Stream<QuerySnapshot<Object?>> resturentStream =
         resturentCollection.snapshots();
-
+     log(userId);
     return resturentStream;
   }
-
 
   Future<void> getuserdata() async {
     SharedPreferences getuserId = await SharedPreferences.getInstance();
@@ -30,21 +31,15 @@ class ProfileController extends GetxController {
     profileStream.value = getResturentDatas(userId);
   }
  
-
-
-
-   Future<void> updateUserData(String userId, Map<String, dynamic> newData) async {
-    try {
-      final CollectionReference userCollection =
-          FirebaseFirestore.instance.collection('users');
-          await userCollection.doc(userId).update(newData);
-
-      log('User data updated successfully!');
-    } catch (e) {
-      log('Error updating user data: $e');
-    }
+   Future<void> updateDocument(String documentId, Map<String, dynamic> updatedData) async { 
+    await FirebaseFirestore.instance
+    .collection ('users')
+    .doc(documentId)
+    .update(updatedData);
+     
   }
 }
+
   
  
 

@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_dinny/controller/profile_controller.dart';
-import 'package:user_dinny/view/edit%20_screen.dart';
-
-
+import 'package:user_dinny/view/editScreen.dart';
+import 'package:user_dinny/view/login.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -27,9 +28,11 @@ class ProfileScreen extends StatelessWidget {
             );
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
-          } else if (snapshot.hasData) { 
-            final List<DocumentSnapshot> data=snapshot.data!.docs;
-             final Map<String, dynamic> userData = data.isNotEmpty ? data.first.data() as Map<String, dynamic> : {};
+          } else if (snapshot.hasData) {
+            final List<DocumentSnapshot> data = snapshot.data!.docs;
+            final Map<String, dynamic> userData = data.isNotEmpty
+                ? data.first.data() as Map<String, dynamic>
+                : {};
             return Scaffold(
               body: Column(
                 children: [
@@ -66,15 +69,15 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              Text( 
-                                 userData['userName'] ?? '', 
+                              Text(
+                                userData['userName'] ?? '',
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
                               const SizedBox(height: 5),
-                               Text( userData['phoneNumber'] ?? '',
+                              Text(userData['phoneNumber'] ?? '',
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -88,17 +91,13 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(
                     height: 25,
                   ),
-                  
-                  const SizedBox(
-                    height: 25,
-                  ),
-                 
                   InkWell(
                     onTap: () {
-                 Get.to (
-                  EditScreen(username:userData['userName'] ?? '' , emailid: userData['email'] ?? '', phonenumber:  userData['phoneNumber'] ?? '',
-
-                  ));
+                      Get.to(EditScreen(
+                        username: userData['userName'] ?? '',
+                        emailid: userData['email'] ?? '',
+                        phonenumber: userData['phoneNumber'] ?? '',
+                      ));
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(left: 25),
@@ -116,10 +115,10 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                   const SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                   const Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 25),
                     child: Row(
                       children: [
@@ -134,7 +133,6 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  
                   const SizedBox(
                     height: 25,
                   ),
@@ -179,22 +177,27 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(
                     height: 25,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 25),
-                    child: Row(
-                      children: [
-                        Icon(Icons.logout),
-                        SizedBox(width: 25),
-                        Text(
-                          'Log Out ',
-                          style: TextStyle(
-                            fontSize: 16,
+                  GestureDetector(
+                    onTap: (){
+                     _logoutUser();
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 25),
+                      child: Row(
+                        children: [
+                          Icon(Icons.logout),
+                          SizedBox(width: 25),
+                          Text(
+                            'Log Out ',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                   const SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   const Padding(
@@ -212,7 +215,6 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                 
                 ],
               ),
             );
@@ -224,5 +226,18 @@ class ProfileScreen extends StatelessWidget {
             );
           }
         }));
+      
+  }
+    Future<void> _logoutUser() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+       SharedPreferences preferences = await SharedPreferences.getInstance();
+      await preferences.remove('getuser_id');
+      // Navigate to login screen or any other screen after logout
+      Get.offAll(Login());
+    } catch (e) {
+      print("Error signing out: $e");
+    }
   }
 }
+

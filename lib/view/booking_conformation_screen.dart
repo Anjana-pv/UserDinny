@@ -18,7 +18,8 @@ class BookingConfirmation extends StatelessWidget {
       required this.tableType,
       required this.email,
       required this.userData,
-      required this.profileImage})
+      required this.profileImage,
+       required this.manucard})
       : super(key: key);
 
   final String restaurantName;
@@ -30,6 +31,7 @@ class BookingConfirmation extends StatelessWidget {
   final String tableType;
   final String email;
   final String profileImage;
+  final String manucard;
   final Map<String, dynamic> userData;
 
   @override
@@ -238,7 +240,12 @@ class BookingConfirmation extends StatelessWidget {
                     userName: userData['username'],
                     phoneNumber: userData['phoneNumber'],
                     resturentId: restaurantId,
-                    profileImage: profileImage);
+                    profileImage: profileImage, 
+                    nameofresto: restaurantName,
+                     manucard: manucard,
+                    
+
+                    );
                 final responce = await newbooking.newbooking(bookingData);
                 Get.to(const HomeScreen());
                 log('$responce');

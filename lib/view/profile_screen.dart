@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_dinny/controller/profile_controller.dart';
-import 'package:user_dinny/view/editScreen.dart';
+import 'package:user_dinny/view/edit_screen.dart';
 import 'package:user_dinny/view/login.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -93,11 +93,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(EditScreen(
-                        username: userData['userName'] ?? '',
-                        emailid: userData['email'] ?? '',
-                        phonenumber: userData['phoneNumber'] ?? '',
-                      ));
+                      Get.to(const EditScreen());
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(left: 25),

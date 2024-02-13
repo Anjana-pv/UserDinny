@@ -247,6 +247,7 @@ class BookingScreen extends StatelessWidget {
                         tableType: newbooking.selectedTableType.string,
                         email: data['email'] ?? '',
                         profileImage: data['profileImage'] ?? '',
+                         manucard:data['menuCards'] ??[],
                       ));
                     },
                     style: ButtonStyle(

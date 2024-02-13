@@ -7,7 +7,6 @@
 // import 'package:user_dinny/controller/firebase_fuction.dart';
 // import 'package:user_dinny/view/common_widgets/client_details_container.dart';
 // import 'package:user_dinny/view/common_widgets/custom_widgets.dart';
-// import 'package:user_dinny/view/common_widgets/timeslot_widget.dart';
 // import 'package:user_dinny/controller/booking.dart';
 // import 'package:user_dinny/controller/calender.dart';
 
@@ -51,7 +50,7 @@
 //       () => Scaffold(
 //         appBar: AppBar(
 //           title: Text(
-//             // ,
+//           "Edit booking"  ,
 //             style: GoogleFonts.lemon(
 //               textStyle: const TextStyle(
 //                 fontSize: 20,

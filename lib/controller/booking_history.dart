@@ -21,7 +21,9 @@ class BookingHistory extends GetxController {
   Stream<QuerySnapshot<Object?>> getBooking() {
     if (userId != null) {
       final CollectionReference userBookingsRef =
-          FirebaseFirestore.instance.collection('users').doc(userId).collection('user_bookings');
+          FirebaseFirestore.instance.collection('users')
+          .doc(userId)
+          .collection('user_bookings');
       final Stream<QuerySnapshot<Object?>> userBookingsStream =
           userBookingsRef.snapshots();
 
@@ -48,7 +50,7 @@ class BookingHistory extends GetxController {
             .delete(); 
 
         await FirebaseFirestore.instance
-            .collection('users')
+            .collection('approvedOne')
             .doc(userId)
             .collection('cancel_booking')
             .add(bookingData); // Add booking data to cancel_booking collection

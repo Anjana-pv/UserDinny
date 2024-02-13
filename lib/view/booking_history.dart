@@ -43,6 +43,7 @@ class ScreenBookingHistory extends StatelessWidget {
 
                   var bookingData =
                       bookings[index].data() as Map<String, dynamic>;
+                    var resturentName = bookingData['resturent_name']?? '';
                   var bookingDate = bookingData[' date'] ?? '';
                   var guestCount = bookingData['guest_count'] ?? '';
                   var bookingTime = bookingData[' time'] ?? '';
@@ -56,6 +57,7 @@ class ScreenBookingHistory extends StatelessWidget {
                         Get.to(BookingScreen(
                           id: bookingId,
                           data: {
+                            'resturentname':resturentName,
                             'bookingDate': bookingDate,
                             'guestCount': guestCount,
                             'bookingTime': bookingTime,
@@ -96,9 +98,9 @@ class ScreenBookingHistory extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            const Text(
-                                              ' Booking Details',
-                                              style: TextStyle(
+                                          Text(
+                                             resturentName,
+                                              style: const TextStyle(
                                                 fontSize: 17.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -148,7 +150,9 @@ class ScreenBookingHistory extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                               Get.to(BookingScreen(id: bookingId, data:bookingData ));
+                                    },
                                     child: const Text('Modify Order'),
                                   ),
                                   TextButton(

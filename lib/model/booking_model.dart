@@ -8,8 +8,10 @@ class BookingModel {
   final String phoneNumber;
   final String resturentId;
   final String profileImage;
+  final String nameofresto;
+  final String manucard;
 
-  BookingModel({
+  BookingModel(  {
   required this.resturentId, 
       required this.date,
       required this.time,
@@ -18,5 +20,8 @@ class BookingModel {
       required this.userId,
       required this.userName,
       required this.phoneNumber,
-      required this.profileImage});
+      required this.profileImage,
+      required this.nameofresto, 
+      required this. manucard,
+      });
 }

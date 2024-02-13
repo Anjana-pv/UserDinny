@@ -61,6 +61,7 @@ class NewBookingController extends GetxController {
 // -----------------------------------------------------------------------
   Future<bool> newbooking(BookingModel book) async {
     Map<String, dynamic> bookinfo = {
+
       ' date': book.date,
       ' time': book.time,
       'table_type': book.tableType,
@@ -69,6 +70,7 @@ class NewBookingController extends GetxController {
       ' user_name': book.userName,
       'phone_number': book.phoneNumber,
       'profile_image': book.profileImage,
+      'resturent_name':book.nameofresto,
     };
     try {
       await FirebaseFirestore.instance

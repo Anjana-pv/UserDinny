@@ -116,6 +116,7 @@ class ScreenFirst extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () {
                                   Get.to(BookingScreen(
+                                    isModify: false,
                                     data: data,
                                     id: id,
                                   ));

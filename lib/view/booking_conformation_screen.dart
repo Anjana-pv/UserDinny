@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/booking.dart';
@@ -19,7 +18,7 @@ class BookingConfirmation extends StatelessWidget {
       required this.email,
       required this.userData,
       required this.profileImage,
-       required this.manucard})
+      required this.manucard})
       : super(key: key);
 
   final String restaurantName;
@@ -31,7 +30,7 @@ class BookingConfirmation extends StatelessWidget {
   final String tableType;
   final String email;
   final String profileImage;
-  final String manucard;
+  final List manucard;
   final Map<String, dynamic> userData;
 
   @override
@@ -170,7 +169,7 @@ class BookingConfirmation extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text("Contact"),
+                        const Text("Contact"),
                         Text(" : ${userData['phoneNumber'] ?? ''}"),
                       ],
                     ),
@@ -232,23 +231,29 @@ class BookingConfirmation extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 final bookingData = BookingModel(
-                    date: bookingDate,
-                    time: bookingTime,
-                    tableType: tableType,
-                    guestCount: guestCount,
-                    userId: userData['userId'],
-                    userName: userData['username'],
-                    phoneNumber: userData['phoneNumber'],
-                    resturentId: restaurantId,
-                    profileImage: profileImage, 
-                    nameofresto: restaurantName,
-                     manucard: manucard,
-                    
-
-                    );
+                  date: bookingDate,
+                  time: bookingTime,
+                  tableType: tableType,
+                  guestCount: guestCount,
+                  userId: userData['userId'],
+                  userName: userData['username'],
+                  phoneNumber: userData['phoneNumber'],
+                  resturentId: restaurantId,
+                  profileImage: profileImage,
+                  nameofresto: restaurantName,
+                  manucard: manucard,
+                   startingTime: userData['startingtime'] ?? '', 
+                   endingtime: userData['endingtime'] ?? '', 
+                );
                 final responce = await newbooking.newbooking(bookingData);
+                if (responce) {
+                  Get.snackbar('success', 'Your table is reserved',
+                      backgroundColor: Colors.green);
+                } else {
+                  Get.snackbar('failed', 'Check your internet connection',
+                      backgroundColor: Colors.red);
+                }
                 Get.to(const HomeScreen());
-                log('$responce');
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith<Color>(

@@ -71,6 +71,7 @@ class NewBookingController extends GetxController {
       'phone_number': book.phoneNumber,
       'profile_image': book.profileImage,
       'resturent_name':book.nameofresto,
+      'menu_cards':book.manucard 
     };
     try {
       await FirebaseFirestore.instance

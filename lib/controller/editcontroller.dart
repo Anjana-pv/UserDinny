@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,9 +6,7 @@ class EditController extends GetxController {
   final Rx<Stream<QuerySnapshot<Object?>>> editStream =
       Rx<Stream<QuerySnapshot<Object?>>>(const Stream.empty());
 
-  TextEditingController username = TextEditingController();
-  TextEditingController phonenumber = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+
 
   @override
   void onInit() {
@@ -33,7 +30,7 @@ class EditController extends GetxController {
   }
 
   Future<void> updateUserDetails(
-      String newName, String newEmail, String newPhoneNumber) async {
+      {required String newName, required String newEmail, required String newPhoneNumber}) async {
     try {
       SharedPreferences getuserId = await SharedPreferences.getInstance();
       final userId = getuserId.getString('getuser_id');

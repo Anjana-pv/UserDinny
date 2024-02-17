@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 class MenuImageview extends StatelessWidget {
   const MenuImageview({
     super.key,
-    required this.data,
+    required this.menuCards,
   });
 
-  final Map<String, dynamic> data;
-
+  final  List menuCards;
+  
   @override
   Widget build(BuildContext context) {
+   
     return SizedBox(
       height: MediaQuery.of(context).size.width * 0.2,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: data['menuCards'].length,
+          itemCount: menuCards.length, 
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.only(left: 40),
@@ -29,7 +30,7 @@ class MenuImageview extends StatelessWidget {
                       ),
                       borderRadius: BorderRadius.circular(15)),
                   child: CachedNetworkImage(
-                    imageUrl: data['menuCards'][index] ?? '',
+                    imageUrl: menuCards[index] ?? '', 
                       imageBuilder: (context, imageProvider) =>
                         Container(
                       decoration: BoxDecoration(

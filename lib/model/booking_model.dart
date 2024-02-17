@@ -9,10 +9,12 @@ class BookingModel {
   final String resturentId;
   final String profileImage;
   final String nameofresto;
-  final String manucard;
+  final List  manucard;
+  final String startingTime;
+  final String endingtime;
 
   BookingModel(  {
-  required this.resturentId, 
+  required this.resturentId,  
       required this.date,
       required this.time,
       required this.tableType,
@@ -23,5 +25,8 @@ class BookingModel {
       required this.profileImage,
       required this.nameofresto, 
       required this. manucard,
+      required this.startingTime, 
+      required this.endingtime, 
+
       });
 }

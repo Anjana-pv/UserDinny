@@ -1,8 +1,8 @@
-import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart'; 
 import 'package:intl/intl.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/view/common_widgets/client_details_container.dart';
@@ -19,31 +19,33 @@ String? selectedTableType;
 final Rx<String> selectedTimeSlot = ''.obs;
 
 class BookingScreen extends StatelessWidget {
-  final String id;
-  final Map<String, dynamic> data;
-
   const BookingScreen({
     Key? key,
     required this.id,
     required this.data,
+    required this.isModify,
   }) : super(key: key);
-
+  final String id;
+  final Map<String, dynamic> data;
+  final bool isModify;
   @override
   Widget build(BuildContext context) {
     final NewBookingController timeSlotController =
         Get.put(NewBookingController());
 
     DateTime selectedDate = DateTime.now();
-     BookingController booking = Get.put(BookingController());
+    BookingController booking = Get.put(BookingController());
     final NewBookingController newbooking = Get.put(NewBookingController());
     double paddingMultiplier = MediaQuery.of(context).size.width * 0.05;
     UserController auth = Get.put(UserController());
 
     return Obx(
       () => Scaffold(
-        appBar: AppBar(
+        appBar: AppBar( 
           title: Text(
-            data['restaurantName'] ?? '',
+            isModify
+                ? data['resturent_name'] ?? ''
+                : data['restaurantName'] ?? '',
             style: GoogleFonts.lemon(
               textStyle: const TextStyle(
                 fontSize: 20,
@@ -69,7 +71,9 @@ class BookingScreen extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(15)),
                       child: CachedNetworkImage(
-                        imageUrl: data['profileImage'] ?? '',
+                        imageUrl: isModify
+                            ? data['profile_image'] ?? ''
+                            : data['profileImage'] ?? '',
                         fit: BoxFit.cover,
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
@@ -124,8 +128,8 @@ class BookingScreen extends StatelessWidget {
                             selectedDate = pickedDate;
                             booking.selectedDate(selectedDate);
                           }
-                           booking. formattedDate.value = DateFormat('d MMM y').format(selectedDate);
-                           log("${booking.formattedDate.value }");
+                          booking.formattedDate.value =
+                              DateFormat('d MMM y').format(selectedDate);
                         },
                         child: const Padding(
                           padding: EdgeInsets.only(right: 30),
@@ -144,8 +148,12 @@ class BookingScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: buildTimeSlots(
-                        data['startingtime'] ?? '',
-                        data['endingtime'] ?? '',
+                        isModify
+                            ? data['time'] ?? ''
+                            : data['startingtime'] ?? '',
+                        isModify
+                            ? data['time'] ?? ''
+                            : data['endingtime'] ?? '',
                       ),
                     ),
                   ),
@@ -168,7 +176,10 @@ class BookingScreen extends StatelessWidget {
                 const SizedBox(
                   height: 6,
                 ),
-                MenuImageview(data: data),
+                MenuImageview(
+                    menuCards: isModify
+                        ? data['menu_cards'] ?? ''
+                        : data['menuCards'] ?? []),
                 const SizedBox(
                   height: 20,
                 ),
@@ -238,16 +249,23 @@ class BookingScreen extends StatelessWidget {
 
                       Get.to(BookingConfirmation(
                         userData: userData,
-                        restaurantName: data['restaurantName'],
-                        location: data['city'],
-                        bookingTime: timeSlotController.selectedTimeSlot.value .toString(),
-                        bookingDate: booking.formattedDate.value ,
+                        restaurantName: isModify
+                            ? data['resturent_name'] ?? ''
+                            : data['restaurantName'],
+                        location: isModify ? '' : data['city'],
+                        bookingTime: timeSlotController.selectedTimeSlot.value
+                            .toString(),
+                        bookingDate: booking.formattedDate.value,
                         guestCount: newbooking.guestcounController.text,
                         restaurantId: id,
                         tableType: newbooking.selectedTableType.string,
-                        email: data['email'] ?? '',
-                        profileImage: data['profileImage'] ?? '',
-                         manucard:data['menuCards'] ??[],
+                        email: isModify ? '' : data['email'] ?? '',
+                        profileImage: isModify
+                            ? data['profile_image'] ?? ''
+                            : data['profileImage'] ?? '',
+                        manucard: isModify
+                            ? data['menu_cards'] ?? ''
+                            : data['menuCards'] ?? [],
                       ));
                     },
                     style: ButtonStyle(

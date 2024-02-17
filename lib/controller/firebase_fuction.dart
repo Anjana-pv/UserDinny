@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController extends GetxController {
   final db = FirebaseFirestore.instance;
+  
 
   Stream<QuerySnapshot> getAccepted() {
     final CollectionReference accepted =

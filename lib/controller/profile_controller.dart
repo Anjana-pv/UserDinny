@@ -34,6 +34,17 @@ class ProfileController extends GetxController {
     final userId = getuserId.getString('getuser_id');
     profileStream.value = getResturentDatas(userId);
   }
+Future<void> deleteUser() async {
+    SharedPreferences getuserId = await SharedPreferences.getInstance();
+    final userId = getuserId.getString('getuser_id');
 
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userId).delete();
+    
+    } catch (error) {
+    
+      log('Error deleting user: $error');
+    }
+  }
   
 }

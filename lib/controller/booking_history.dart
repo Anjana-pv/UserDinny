@@ -10,8 +10,7 @@ class BookingHistory extends GetxController {
   final CollectionReference userBookingsCollection =
        FirebaseFirestore.instance.collection('users');
 
-  String? userId; // Store user ID here
-
+  String? userId; 
   @override
   void onInit() {
     super.onInit();
@@ -29,7 +28,7 @@ class BookingHistory extends GetxController {
 
       return userBookingsStream;
     } else {
-      // Return an empty stream if user ID is not available
+      
       return Stream.empty();
     }
   }

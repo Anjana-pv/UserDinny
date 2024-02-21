@@ -5,15 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController extends GetxController {
   final db = FirebaseFirestore.instance;
-  
-
   Stream<QuerySnapshot> getAccepted() {
     final CollectionReference accepted =
         FirebaseFirestore.instance.collection('approvedOne');
     final acceptStream = accepted.snapshots();
     return acceptStream;
   }
-
   Future<List<String>> fetchProfileImageUrls() async {
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot =
@@ -28,7 +25,7 @@ class UserController extends GetxController {
       return [];
     }
   }
-
+// -------------------------------------------------------------------------------
   Stream<QuerySnapshot> getuserDeatils() {
     final CollectionReference accepted =
         FirebaseFirestore.instance.collection('users');
@@ -41,7 +38,7 @@ class UserController extends GetxController {
   void setIndex(int index) {
     selectedIndex.value = index;
   }
-
+// --------------------------------------------------------------------------------------------------------
   Future getuserdata() async {
     SharedPreferences getuserId = await SharedPreferences.getInstance();
 

@@ -7,7 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_dinny/controller/profile_controller.dart';
 import 'package:user_dinny/view/edit_screen.dart';
 import 'package:user_dinny/view/login.dart';
+import 'package:user_dinny/view/privacy_policies.dart';
 import 'package:user_dinny/view/settings.dart';
+import 'package:user_dinny/view/terms_condition.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -107,19 +109,7 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    ListTile(
-                      onTap: () {
-                        // Handle terms and conditions
-                      },
-                      leading: const Icon(Icons.list_alt_rounded),
-                      title: const Text(
-                        'Terms and Conditions',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    
                     ListTile(
                       onTap: () {
                         Share.share('am happy');
@@ -135,11 +125,36 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     ListTile(
                       onTap: () {
-                       Get.to(SettingsScreeen());
+                       Get.to(const SettingsScreeen());
                       },
                       leading: const Icon(Icons.settings),
                       title: const Text(
                         'Settings',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                       Get.to(const TermsAndConditionsScreen());
+                      },
+                      leading: const Icon(Icons.list_alt_rounded),
+                      title: const Text(
+                        'Terms and Conditions',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                   
+                    
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ListTile(
+                      onTap: () {
+                      Get.to(const PrivacyPolicyScreen());
+                      },
+                      leading: const Icon(Icons.policy),
+                      title: const Text(
+                        'Policies and privacy',
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
@@ -153,19 +168,6 @@ class ProfileScreen extends StatelessWidget {
                       leading: const Icon(Icons.logout),
                       title: const Text(
                         'Log Out',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    ListTile(
-                      onTap: () {
-                      
-                      },
-                      leading: const Icon(Icons.policy),
-                      title: const Text(
-                        'Policies and privacy',
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
@@ -189,7 +191,7 @@ class ProfileScreen extends StatelessWidget {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.remove('getuser_id');
       // Navigate to login screen or any other screen after logout
-      Get.offAll(Login());
+      Get.offAll(const Login());
     } catch (e) {
       print("Error signing out: $e");
     }

@@ -28,7 +28,7 @@ class ProfileController extends GetxController {
     log(userId);
     return resturentStream;
   }
-
+// ----------------------------------------------------------------------------------------
   Future<void> getuserdata() async {
     SharedPreferences getuserId = await SharedPreferences.getInstance();
     final userId = getuserId.getString('getuser_id');

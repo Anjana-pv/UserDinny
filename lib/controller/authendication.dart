@@ -4,12 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
-   
-
+  
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   Rx<User?> user = Rx<User?>(null);
-
   @override
   void onInit() {
     user.bindStream(_auth.authStateChanges());
@@ -33,8 +30,7 @@ class AuthController extends GetxController {
 
        SharedPreferences getuserId =  await SharedPreferences.getInstance();
         getuserId.setString('getuser_id', userId);
-  
-      
+            
       await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'userId': userId,
         'userName': userName,

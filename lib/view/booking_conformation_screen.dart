@@ -1,8 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/booking.dart';
 import 'package:user_dinny/model/booking_model.dart';
-import 'package:user_dinny/view/home_screen.dart';
 import 'package:user_dinny/view/payment.dart';
 
 class BookingConfirmation extends StatelessWidget {
@@ -18,7 +18,10 @@ class BookingConfirmation extends StatelessWidget {
       required this.email,
       required this.userData,
       required this.profileImage,
-      required this.manucard})
+      required this.endingTime,
+      required this.startingTime,
+      required this.manucard, 
+      required this.city})
       : super(key: key);
 
   final String restaurantName;
@@ -31,6 +34,10 @@ class BookingConfirmation extends StatelessWidget {
   final String email;
   final String profileImage;
   final List manucard;
+  final String startingTime;
+  final String endingTime;
+  
+  final String city;
   final Map<String, dynamic> userData;
 
   @override
@@ -242,9 +249,12 @@ class BookingConfirmation extends StatelessWidget {
                   profileImage: profileImage,
                   nameofresto: restaurantName,
                   manucard: manucard,
-                   startingTime: userData['startingtime'] ?? '', 
-                   endingtime: userData['endingtime'] ?? '', 
+                   startingTime:startingTime, 
+                   endingTime: endingTime,
+                    location: location,
+                     city: city, 
                 );
+
                 final responce = await newbooking.newbooking(bookingData);
                 if (responce) {
                   Get.snackbar('success', 'Your table is reserved',
@@ -253,7 +263,8 @@ class BookingConfirmation extends StatelessWidget {
                   Get.snackbar('failed', 'Check your internet connection',
                       backgroundColor: Colors.red);
                 }
-                Get.to(const HomeScreen());
+
+                
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith<Color>(

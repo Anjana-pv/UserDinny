@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:user_dinny/controller/booking.dart';
 final NewBookingController timeSlotController =
       Get.put(NewBookingController());
-List<Widget> buildTimeSlots(String startTime, String endTime) {
+List<Widget> buildTimeSlots(String startTime, String endTime, String? prassedtime) {
  
 
   List<Widget> timeSlotWidgets = [];
@@ -25,7 +25,7 @@ List<Widget> buildTimeSlots(String startTime, String endTime) {
       timeSlotWidgets.add(
         InkWell(
           onTap: () {
-            final newTimeSlot = '$formattedStartTime - $formattedEndTime';
+            // final newTimeSlot = '$formattedStartTime - $formattedEndTime';
           timeSlotController.isSelected.value =
                 true; // Set isSelected to true
             print('Selected time slot index: $index');
@@ -76,8 +76,7 @@ class CustomElevatedButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: MaterialStateColor.resolveWith(
             (Set<MaterialState> states) => isSelected.value
-                ? const Color.fromARGB(
-                    255, 47, 216, 32) // Yellow color when selected
+                ? const Color.fromARGB(255, 47, 100, 42) // Yellow color when selected
                 : const Color.fromARGB(255, 236, 239, 242), // Default color
           ),
         ),

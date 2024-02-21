@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,10 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_dinny/model/booking_model.dart';
 
 class NewBookingController extends GetxController {
-  
   TextEditingController guestcounController = TextEditingController();
   Stream<QuerySnapshot<Object?>> bookingStream = const Stream.empty();
-   Stream<QuerySnapshot<Object?>> bookdata = const Stream.empty();
+  Stream<QuerySnapshot<Object?>> bookdata = const Stream.empty();
   final RxBool isSelected = false.obs;
   final RxString selectedValue = ''.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
@@ -61,7 +59,6 @@ class NewBookingController extends GetxController {
 // -----------------------------------------------------------------------
   Future<bool> newbooking(BookingModel book) async {
     Map<String, dynamic> bookinfo = {
-
       ' date': book.date,
       ' time': book.time,
       'table_type': book.tableType,
@@ -70,8 +67,12 @@ class NewBookingController extends GetxController {
       ' user_name': book.userName,
       'phone_number': book.phoneNumber,
       'profile_image': book.profileImage,
-      'resturent_name':book.nameofresto,
-      'menu_cards':book.manucard 
+      'resturent_name': book.nameofresto,
+      'menu_cards': book.manucard,
+      'startedtime': book.startingTime,
+      'endingtime': book.endingTime,
+      'location': book.location,
+      'city': book.city
     };
     try {
       await FirebaseFirestore.instance
@@ -90,7 +91,7 @@ class NewBookingController extends GetxController {
       return false;
     }
   }
-
+// ---------------------------------------------------------------------------
   Stream<QuerySnapshot<Object?>> getResturentDatas(userId) {
     final CollectionReference resturentCollection = FirebaseFirestore.instance
         .collection('users')
@@ -99,18 +100,16 @@ class NewBookingController extends GetxController {
     final resturentStream = resturentCollection.snapshots();
     return resturentStream;
   }
-  
 
   Stream<QuerySnapshot> fetchBookingData(userId) {
-  try {
-    bookingStream = getResturentDatas(userId);
-    return bookingStream;
-  } catch (e) {
- 
-    return Stream.empty();
+    try {
+      bookingStream = getResturentDatas(userId);
+      return bookingStream;
+    } catch (e) {
+      return const Stream.empty();
+    }
   }
-}
-
+// --------------------------------------------------------------------------
   Future<bool> userBooking(BookingModel book) async {
     Map<String, dynamic> bookinfo = {
       ' date': book.date,
@@ -133,11 +132,12 @@ class NewBookingController extends GetxController {
       return false;
     }
   }
-   Future<void> fetchBookingHistory() async {
+// ---------------------------------------------------------------------------------------
+  Future<void> fetchBookingHistory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('getuser_id');
- bookdata=  fetchBookingData(userId);
- log('$bookdata');
+    bookdata = fetchBookingData(userId);
+    log('$bookdata');
   }
 
   Stream<QuerySnapshot<Object?>> getoffers(resturentId) {
@@ -148,16 +148,11 @@ class NewBookingController extends GetxController {
     final resturentStream = resturentCollection.snapshots();
     return resturentStream;
   }
-
-  Stream<QuerySnapshot<Object?>>  getoffering() {
+// -----------------------------------------------------------------------------------------------
+  Stream<QuerySnapshot<Object?>> getoffering() {
     final CollectionReference accepted =
         FirebaseFirestore.instance.collection('offers');
     final acceptStream = accepted.snapshots();
     return acceptStream;
   }
-
-
-
-
-
 }

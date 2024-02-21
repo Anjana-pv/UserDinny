@@ -1,24 +1,25 @@
+import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart'; 
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
+import 'package:user_dinny/view/booking_conformation_screen.dart';
 import 'package:user_dinny/view/common_widgets/client_details_container.dart';
 import 'package:user_dinny/view/common_widgets/custom_widgets.dart';
 import 'package:user_dinny/view/common_widgets/menucard_img.dart';
 import 'package:user_dinny/view/common_widgets/timeslot_widget.dart';
 import 'package:user_dinny/controller/booking.dart';
 import 'package:user_dinny/controller/calender.dart';
-import 'package:user_dinny/view/booking_conformation_screen.dart';
 
 GlobalKey<FormState> tableformKey = GlobalKey<FormState>();
 TimeOfDay? selectedTime;
 String? selectedTableType;
 final Rx<String> selectedTimeSlot = ''.obs;
 
-class BookingScreen extends StatelessWidget {
+class BookingScreen extends StatefulWidget {
   const BookingScreen({
     Key? key,
     required this.id,
@@ -28,24 +29,46 @@ class BookingScreen extends StatelessWidget {
   final String id;
   final Map<String, dynamic> data;
   final bool isModify;
+
+  @override
+  State<BookingScreen> createState() => _BookingScreenState();
+}
+
+final NewBookingController timeSlotController = Get.put(NewBookingController());
+
+DateTime selectedDate = DateTime.now();
+BookingController booking = Get.put(BookingController());
+final NewBookingController newbooking = Get.put(NewBookingController());
+
+UserController auth = Get.put(UserController());
+
+class _BookingScreenState extends State<BookingScreen> {
+  @override
+  void initState() {
+    Rx<String> guestcount = ''.obs;
+    if (widget.isModify) {
+      guestcount.value = widget.data['guest_count'] ?? '0';
+      newbooking.guestcounController.text = guestcount.value;
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    newbooking.guestcounController.text = '';
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final NewBookingController timeSlotController =
-        Get.put(NewBookingController());
-
-    DateTime selectedDate = DateTime.now();
-    BookingController booking = Get.put(BookingController());
-    final NewBookingController newbooking = Get.put(NewBookingController());
     double paddingMultiplier = MediaQuery.of(context).size.width * 0.05;
-    UserController auth = Get.put(UserController());
-
     return Obx(
       () => Scaffold(
-        appBar: AppBar( 
+        appBar: AppBar(
           title: Text(
-            isModify
-                ? data['resturent_name'] ?? ''
-                : data['restaurantName'] ?? '',
+            widget.isModify
+                ? widget.data['resturent_name'] ?? ''
+                : widget.data['restaurantName'] ?? '',
             style: GoogleFonts.lemon(
               textStyle: const TextStyle(
                 fontSize: 20,
@@ -71,9 +94,9 @@ class BookingScreen extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(15)),
                       child: CachedNetworkImage(
-                        imageUrl: isModify
-                            ? data['profile_image'] ?? ''
-                            : data['profileImage'] ?? '',
+                        imageUrl: widget.isModify
+                            ? widget.data['profile_image'] ?? ''
+                            : widget.data['profileImage'] ?? '',
                         fit: BoxFit.cover,
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
@@ -148,12 +171,13 @@ class BookingScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: buildTimeSlots(
-                        isModify
-                            ? data['time'] ?? ''
-                            : data['startingtime'] ?? '',
-                        isModify
-                            ? data['time'] ?? ''
-                            : data['endingtime'] ?? '',
+                        widget.isModify
+                            ? widget.data['startedtime'] ?? ''
+                            : widget.data['startingtime'] ?? '',
+                        widget.isModify
+                            ? widget.data['endingtime'] ?? ''
+                            : widget.data['endingtime'] ?? '',
+                        widget.isModify ? widget.data['time'] ?? '' : null,
                       ),
                     ),
                   ),
@@ -177,9 +201,9 @@ class BookingScreen extends StatelessWidget {
                   height: 6,
                 ),
                 MenuImageview(
-                    menuCards: isModify
-                        ? data['menu_cards'] ?? ''
-                        : data['menuCards'] ?? []),
+                    menuCards: widget.isModify
+                        ? widget.data['menu_cards'] ?? ''
+                        : widget.data['menuCards'] ?? []),
                 const SizedBox(
                   height: 20,
                 ),
@@ -217,10 +241,11 @@ class BookingScreen extends StatelessWidget {
                         child: TextFormField(
                           keyboardType: TextInputType.number,
                           controller: newbooking.guestcounController,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.people),
-                            hintText: '0',
-                            contentPadding: EdgeInsets.symmetric(horizontal: 7),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.people),
+                            hintText: widget.isModify ? '' : '0',
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 7),
                             border: InputBorder.none,
                           ),
                         ),
@@ -238,7 +263,10 @@ class BookingScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Detailcontainer(data: data),
+                Detailcontainer(
+                  data: widget.data,
+                  ismodify: widget.isModify,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -247,26 +275,35 @@ class BookingScreen extends StatelessWidget {
                       final Map<String, dynamic> userData =
                           await auth.getuserdata();
 
-                      Get.to(BookingConfirmation(
-                        userData: userData,
-                        restaurantName: isModify
-                            ? data['resturent_name'] ?? ''
-                            : data['restaurantName'],
-                        location: isModify ? '' : data['city'],
-                        bookingTime: timeSlotController.selectedTimeSlot.value
-                            .toString(),
-                        bookingDate: booking.formattedDate.value,
-                        guestCount: newbooking.guestcounController.text,
-                        restaurantId: id,
-                        tableType: newbooking.selectedTableType.string,
-                        email: isModify ? '' : data['email'] ?? '',
-                        profileImage: isModify
-                            ? data['profile_image'] ?? ''
-                            : data['profileImage'] ?? '',
-                        manucard: isModify
-                            ? data['menu_cards'] ?? ''
-                            : data['menuCards'] ?? [],
-                      ));
+                      Get.to(
+                        BookingConfirmation(
+                          userData: userData,
+                          restaurantName: widget.isModify
+                              ? widget.data['resturent_name'] ?? ''
+                              : widget.data['restaurantName'],
+                          location: widget.isModify
+                              ? widget.data['location'] ?? ''
+                              : widget.data['address'] ?? '',
+                          bookingTime: timeSlotController
+                              .selectedTimeSlot.value
+                              .toString(),
+                          bookingDate: booking.formattedDate.value,
+                          guestCount: newbooking.guestcounController.text,
+                          restaurantId: widget.id,
+                          tableType: newbooking.selectedTableType.string,
+                          email: widget.isModify ? '' : widget.data['email'] ?? '',
+                          profileImage: widget.isModify
+                              ? widget.data['profile_image'] ?? ''
+                              : widget.data['profileImage'] ?? '',
+                          manucard: widget.isModify
+                              ? widget.data['menu_cards'] ?? []
+                              : widget.data['menuCards'] ?? [],
+                          endingTime: widget.data['endingtime'] ?? '',
+                          startingTime: widget.data['startingtime'] ?? '',
+                          city: widget.data['city'] ?? '',
+                        ),
+                      );
+                      log("${widget.data['time']??''}");    
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(

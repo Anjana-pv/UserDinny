@@ -2,12 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
-import 'package:user_dinny/controller/search_controller.dart';
 import 'package:user_dinny/view/booking_scree.dart';
 import 'package:user_dinny/view/home_screen.dart';
 
 Rx<String> searchvalue = ''.obs;
-SearchGetController searchInstance = Get.put(SearchGetController());
 final usercontroller = Get.put(UserController());
 final searchController = TextEditingController().obs;
 class SearchScreen extends StatelessWidget {
@@ -45,19 +43,19 @@ class SearchScreen extends StatelessWidget {
                   child: TextFormField(
                     controller: searchController.value,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       hintText: 'Search your favorite restaurant',
                       filled: true,
-                      fillColor: Color.fromARGB(255, 231, 231, 231),
-                      prefixIcon: Icon(Icons.search),
+                      fillColor: const Color.fromARGB(255, 231, 231, 231),
+                      prefixIcon: const Icon(Icons.search),
                       suffixIcon: IconButton(onPressed: () { 
                        searchvalue.value = '';
                        searchController.value.text='';
                        }, 
-                       icon:Icon( Icons.close ))),
+                       icon:const Icon( Icons.close ))),
                     onChanged: (value) {
                       searchvalue.value = value;
                     },

@@ -5,9 +5,11 @@ class Detailcontainer extends StatelessWidget {
   const Detailcontainer({
     super.key,
     required this.data,
+     required this.ismodify,
   });
 
   final Map<String, dynamic> data;
+  final bool ismodify;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class Detailcontainer extends StatelessWidget {
                   size: 16,
                 ),
                 const SizedBox(width: 10),
-                Text(
+                Text(ismodify?' ${data['resturent_name']}':
                   ' ${data['restaurantName']}',
                   style: const TextStyle(
                     color: Color.fromARGB(255, 0, 0, 0),
@@ -67,7 +69,7 @@ class Detailcontainer extends StatelessWidget {
                   size: 16,
                 ),
                 const SizedBox(width: 10),
-                Text(
+                Text(  
                   ' ${data['city']}',
                   style: const TextStyle(
                     color: Color.fromARGB(255, 0, 0, 0),
@@ -91,6 +93,7 @@ class Detailcontainer extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
+                  ismodify?' ${data['location']}':
                   ' ${data['address']}',
                   style: const TextStyle(
                     color: Color.fromARGB(255, 8, 8, 8),

@@ -7,7 +7,6 @@ class EditController extends GetxController {
       Rx<Stream<QuerySnapshot<Object?>>>(const Stream.empty());
 
 
-
   @override
   void onInit() {
     super.onInit();

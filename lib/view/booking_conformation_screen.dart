@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/booking.dart';
+import 'package:user_dinny/controller/booking_history.dart';
 import 'package:user_dinny/model/booking_model.dart';
 import 'package:user_dinny/view/payment.dart';
 
@@ -21,7 +22,9 @@ class BookingConfirmation extends StatelessWidget {
       required this.endingTime,
       required this.startingTime,
       required this.manucard, 
-      required this.city})
+      required this.city,
+      required this.isModify,
+      required this.bookingId})
       : super(key: key);
 
   final String restaurantName;
@@ -36,6 +39,8 @@ class BookingConfirmation extends StatelessWidget {
   final List manucard;
   final String startingTime;
   final String endingTime;
+  final bool isModify;
+  final String bookingId;
   
   final String city;
   final Map<String, dynamic> userData;
@@ -43,7 +48,7 @@ class BookingConfirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NewBookingController newbooking = Get.put(NewBookingController());
-
+ BookingHistory updatebooking = Get.put(BookingHistory());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -187,6 +192,7 @@ class BookingConfirmation extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
+            isModify?Row(): 
             Container(
               height: 150,
               width: MediaQuery.of(context).size.width,
@@ -255,7 +261,7 @@ class BookingConfirmation extends StatelessWidget {
                      city: city, 
                 );
 
-                final responce = await newbooking.newbooking(bookingData);
+                final responce =  isModify? await updatebooking.updatebooking(bookingData, bookingId) : await newbooking.newbooking(bookingData);
                 if (responce) {
                   Get.snackbar('success', 'Your table is reserved',
                       backgroundColor: Colors.green);
@@ -279,7 +285,7 @@ class BookingConfirmation extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text(
+              child:   Text(isModify?'Confirm':
                 'Submit',
                 style: TextStyle(color: Colors.white),
               ),

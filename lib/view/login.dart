@@ -7,8 +7,7 @@ import 'package:user_dinny/view/home_screen.dart';
 import 'package:user_dinny/view/signin.dart';
 
 final GlobalKey<FormState> validationKey = GlobalKey<FormState>();
-TextEditingController passwordcontroller = TextEditingController();
-TextEditingController emailcontrooller = TextEditingController();
+
 
 class Login extends StatelessWidget {
  
@@ -38,25 +37,20 @@ class Login extends StatelessWidget {
                   height: 30,
                 ),
                 reusableTextFeild('Enter Uername', Icons.verified_user, false,
-                    emailcontrooller),
+                authController.emailcontrooller),
                 const SizedBox(
                   height: 20,
                 ),
                 reusableTextFeild(
-                    "Enter Password", Icons.lock, true, passwordcontroller),
+                    "Enter Password", Icons.lock, true,authController.passwordcontroller),
                 const SizedBox(
                   height: 20,
                 ),
                 signInSignButton(context, true, () async {
                   if (validationKey.currentState?.validate() ?? false) {
-                    await authController.signIn(
-                      email: emailcontrooller.text,
-                      password: passwordcontroller.text,
-                    );
-                    if (authController.user.value != null) {
-                      print('created new account');
-                      Get.to(const HomeScreen());
-                    }
+                   
+                    authController.login(emailcontrooller.text, passwordcontroller.text);
+                    
                   }
                 }),
                 signupotion()

@@ -83,7 +83,7 @@ class SearchScreen extends StatelessWidget {
                           Get.to(BookingScreen(
                             isModify: false,
                             id: restaurant.id,
-                            data: restaurant.data()! as Map<String, dynamic>,
+                            data: restaurant.data()! as Map<String, dynamic>, bookingId: '',
                           ));
                         },
                         child: Card(

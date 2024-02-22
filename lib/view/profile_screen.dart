@@ -17,23 +17,21 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    ProfileController profileInstance = Get.put(ProfileController());
-    return Obx(() => StreamBuilder<QuerySnapshot>(
-          stream: profileInstance.profileStream.value,
+    UserProfileController profileInstance = Get.put(UserProfileController());
+    return Obx(() => StreamBuilder(  
+          stream: profileInstance.userProfileStream.value,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const SizedBox(
                 child: Center(
-                  child: CircularProgressIndicator(  ),
+                  child: CircularProgressIndicator(),
                 ),
               );
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
-              final List<DocumentSnapshot> data = snapshot.data!.docs;
-              final Map<String, dynamic> userData = data.isNotEmpty
-                  ? data.first.data() as Map<String, dynamic>
-                  : {};
+final userData = snapshot.data!.data() as Map<String, dynamic>;          
+               
               return Scaffold(
                 body: Column(
                   children: [
@@ -109,7 +107,6 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    
                     ListTile(
                       onTap: () {
                         Share.share('am happy');
@@ -125,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     ListTile(
                       onTap: () {
-                       Get.to(const SettingsScreeen());
+                        Get.to(const SettingsScreeen());
                       },
                       leading: const Icon(Icons.settings),
                       title: const Text(
@@ -133,9 +130,12 @@ class ProfileScreen extends StatelessWidget {
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     ListTile(
                       onTap: () {
-                       Get.to(const TermsAndConditionsScreen());
+                        Get.to(const TermsAndConditionsScreen());
                       },
                       leading: const Icon(Icons.list_alt_rounded),
                       title: const Text(
@@ -143,14 +143,12 @@ class ProfileScreen extends StatelessWidget {
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
-                   
-                    
                     const SizedBox(
                       height: 15,
                     ),
                     ListTile(
                       onTap: () {
-                      Get.to(const PrivacyPolicyScreen());
+                        Get.to(const PrivacyPolicyScreen());
                       },
                       leading: const Icon(Icons.policy),
                       title: const Text(
@@ -190,7 +188,7 @@ class ProfileScreen extends StatelessWidget {
       await FirebaseAuth.instance.signOut();
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.remove('getuser_id');
-      // Navigate to login screen or any other screen after logout
+
       Get.offAll(const Login());
     } catch (e) {
       print("Error signing out: $e");

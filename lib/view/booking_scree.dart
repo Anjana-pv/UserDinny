@@ -25,11 +25,13 @@ class BookingScreen extends StatefulWidget {
     required this.id,
     required this.data,
     required this.isModify,
+     required this.bookingId,
+
   }) : super(key: key);
   final String id;
   final Map<String, dynamic> data;
   final bool isModify;
-
+  final String bookingId;
   @override
   State<BookingScreen> createState() => _BookingScreenState();
 }
@@ -140,9 +142,15 @@ class _BookingScreenState extends State<BookingScreen> {
                       ),
                       InkWell(
                         onTap: () async {
+                          String dateString = widget.data['date'] ?? '';
+
+                          DateTime initialDateTime = dateString.isNotEmpty
+                              ? DateFormat('dd MMM yyyy').parse(dateString)
+                              : DateTime.now();
+
                           DateTime? pickedDate = await showDatePicker(
                             context: context,
-                            initialDate: DateTime.now(),
+                            initialDate: initialDateTime,
                             firstDate: DateTime(2024),
                             lastDate: DateTime(2025),
                           );
@@ -284,14 +292,14 @@ class _BookingScreenState extends State<BookingScreen> {
                           location: widget.isModify
                               ? widget.data['location'] ?? ''
                               : widget.data['address'] ?? '',
-                          bookingTime: timeSlotController
-                              .selectedTimeSlot.value
+                          bookingTime: timeSlotController.selectedTimeSlot.value
                               .toString(),
                           bookingDate: booking.formattedDate.value,
                           guestCount: newbooking.guestcounController.text,
                           restaurantId: widget.id,
                           tableType: newbooking.selectedTableType.string,
-                          email: widget.isModify ? '' : widget.data['email'] ?? '',
+                          email:
+                              widget.isModify ? '' : widget.data['email'] ?? '',
                           profileImage: widget.isModify
                               ? widget.data['profile_image'] ?? ''
                               : widget.data['profileImage'] ?? '',
@@ -300,18 +308,21 @@ class _BookingScreenState extends State<BookingScreen> {
                               : widget.data['menuCards'] ?? [],
                           endingTime: widget.data['endingtime'] ?? '',
                           startingTime: widget.data['startingtime'] ?? '',
-                          city: widget.data['city'] ?? '',
+                          city: widget.data['city'] ?? '', 
+                          isModify: widget.isModify,
+                           bookingId:widget.bookingId
+
                         ),
                       );
-                      log("${widget.data['time']??''}");    
+                      log("${widget.data['time'] ?? ''}");
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 32, 101, 68),
                     )),
-                    child: const Text(
-                      '   Book Now   ',
-                      style: TextStyle(color: Colors.white),
+                    child: Text(
+                      widget.isModify ? "Update Booking" : '   Book Now   ',
+                      style: const TextStyle(color: Colors.white),
                     ))
               ]),
             ),

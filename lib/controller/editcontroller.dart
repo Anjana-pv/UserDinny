@@ -1,35 +1,16 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_dinny/controller/profile_controller.dart';
 
 class EditController extends GetxController {
-  final Rx<Stream<QuerySnapshot<Object?>>> editStream =
-      Rx<Stream<QuerySnapshot<Object?>>>(const Stream.empty());
-
-
-  @override
-  void onInit() {
-    super.onInit();
-    getuserdata();
-  }
-
-  Stream<QuerySnapshot<Object?>> getResturentDatas(userId) {
-    final CollectionReference resturentCollection =
-        FirebaseFirestore.instance.collection('users');
-    final Stream<QuerySnapshot<Object?>> resturentStream =
-        resturentCollection.snapshots();
-
-    return resturentStream;
-  }
-
-  Future<void> getuserdata() async {
-    SharedPreferences getuserId = await SharedPreferences.getInstance();
-    final userId = getuserId.getString('getuser_id');
-    editStream.value = getResturentDatas(userId);
-  }
+  final profileInstance=Get.put(UserProfileController());
 
   Future<void> updateUserDetails(
-      {required String newName, required String newEmail, required String newPhoneNumber}) async {
+      {required String newName,
+      required String newEmail,
+      required String newPhoneNumber}) async {
     try {
       SharedPreferences getuserId = await SharedPreferences.getInstance();
       final userId = getuserId.getString('getuser_id');
@@ -39,7 +20,7 @@ class EditController extends GetxController {
         'userName': newName,
         'email': newEmail,
         'phoneNumber': newPhoneNumber,
-      });
+      }).then((value) => profileInstance.getuserdatas()); 
     } catch (e) {
       print('Error updating user details: $e');
     }

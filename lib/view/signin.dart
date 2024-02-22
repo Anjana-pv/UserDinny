@@ -89,7 +89,7 @@ class SignupScreen extends StatelessWidget {
                       );
 
                       if (authController.user.value != null) {
-                        print('created new account');
+                       
                         Get.to(HomeScreen());
                       }
                     }

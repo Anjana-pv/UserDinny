@@ -1,43 +1,16 @@
-import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/view/home_screen.dart';
-import 'package:user_dinny/view/login.dart';
+import 'package:user_dinny/controller/splash_controller.dart';
 
-class SplashScreen extends StatefulWidget {
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
+class SplashScreen extends StatelessWidget {
+  final SplashController _controller = Get.put(SplashController());
 
-class _SplashScreenState extends State<SplashScreen> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    // Navigate after a delay
-    Timer(
-      const Duration(seconds: 3), 
-      () => checkAuthentication(),
-    );
-  }
-
-  void checkAuthentication() async {
-    User? user = _auth.currentUser;
-    if (user != null) {
-     
-   Get.to( const HomeScreen());
-      
-    } else {
-     Get.to(const Login());
-      
-    }
-  }
+   SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    _controller.checkAuthentication();
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -49,7 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 200,
             ),
             const SizedBox(height: 20),
-            const CircularProgressIndicator(),
+            const CircularProgressIndicator(
+              value: 2.5,
+            ),
           ],
         ),
       ),

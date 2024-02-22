@@ -5,7 +5,7 @@ import 'package:user_dinny/controller/booking_history.dart';
 import 'package:user_dinny/view/booking_scree.dart';
 
 class ScreenBookingHistory extends StatelessWidget {
-  const ScreenBookingHistory({super.key});
+  const ScreenBookingHistory({super.key,});
 
   @override 
   Widget build(BuildContext context) {
@@ -44,9 +44,9 @@ class ScreenBookingHistory extends StatelessWidget {
                   var bookingData =
                       bookings[index].data() as Map<String, dynamic>;
                     var resturentName = bookingData['resturent_name']?? '';
-                  var bookingDate = bookingData[' date'] ?? '';
+                  var bookingDate = bookingData['date'] ?? '';
                   var guestCount = bookingData['guest_count'] ?? '';
-                  var bookingTime = bookingData[' time'] ?? '';
+                  var bookingTime = bookingData['time'] ?? '';
                   String profileimage = bookingData['profile_image'] ?? '';
 
                   return Card(
@@ -139,13 +139,13 @@ class ScreenBookingHistory extends StatelessWidget {
                                 TextButton(
                                   onPressed: () { 
                                     
-                              Get.to(BookingScreen(id: bookingId, data:bookingData, isModify: true, ));
+                              Get.to(BookingScreen(id: bookingId, data:bookingData, isModify: true, bookingId: bookingId, ));
                                   },
                                   child: const Text('Modify Order'),
                                 ),
                                 TextButton(
                                   onPressed: () async {
-                                    // Show confirmation dialog
+                                   
                                     bool confirmed = await showDialog(
                                       context: context,
                                       builder: (BuildContext context) {

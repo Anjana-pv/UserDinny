@@ -59,12 +59,12 @@ class NewBookingController extends GetxController {
 // -----------------------------------------------------------------------
   Future<bool> newbooking(BookingModel book) async {
     Map<String, dynamic> bookinfo = {
-      ' date': book.date,
-      ' time': book.time,
+      'date': book.date,
+      'time': book.time,
       'table_type': book.tableType,
       'guest_count': book.guestCount,
       'user_id': book.userId,
-      ' user_name': book.userName,
+      'user_name': book.userName,
       'phone_number': book.phoneNumber,
       'profile_image': book.profileImage,
       'resturent_name': book.nameofresto,

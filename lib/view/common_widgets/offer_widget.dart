@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:user_dinny/controller/booking.dart';
+import 'package:user_dinny/controller/booking_controller.dart';
 
 class OfferWidget extends StatelessWidget {
    OfferWidget({

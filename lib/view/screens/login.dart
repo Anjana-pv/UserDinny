@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/view/common_widgets/table_dropdown.dart';
-import 'package:user_dinny/controller/authendication.dart';
+import 'package:user_dinny/view/common_widgets/custom_textfeild.dart';
+import 'package:user_dinny/controller/auth_controller.dart';
 import 'package:user_dinny/styling/colors.dart';
-import 'package:user_dinny/view/home_screen.dart';
-import 'package:user_dinny/view/signin.dart';
+import 'package:user_dinny/view/screens/signin.dart';
 
 final GlobalKey<FormState> validationKey = GlobalKey<FormState>();
 
-
 class Login extends StatelessWidget {
- 
   const Login({super.key});
 
   @override
@@ -37,20 +34,19 @@ class Login extends StatelessWidget {
                   height: 30,
                 ),
                 reusableTextFeild('Enter Uername', Icons.verified_user, false,
-                authController.emailcontrooller),
+                    authController.emailcontrooller),
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextFeild(
-                    "Enter Password", Icons.lock, true,authController.passwordcontroller),
+                reusableTextFeild("Enter Password", Icons.lock, true,
+                    authController.passwordcontroller),
                 const SizedBox(
                   height: 20,
                 ),
                 signInSignButton(context, true, () async {
                   if (validationKey.currentState?.validate() ?? false) {
-                   
-                    authController.login(emailcontrooller.text, passwordcontroller.text);
-                    
+                    authController.login(
+                        emailcontrooller.text, passwordcontroller.text);
                   }
                 }),
                 signupotion()

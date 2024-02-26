@@ -3,12 +3,15 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:user_dinny/controller/booking.dart';
+import 'package:user_dinny/controller/booking_controller.dart';
 
 final NewBookingController timeSlotController = Get.put(NewBookingController());
 List<Widget> buildTimeSlots(
     String startTime, String endTime, String? prassedtime) {
   List<Widget> timeSlotWidgets = [];
+   
+
+
 
   try {
     DateFormat dateFormat = DateFormat("h:mm a");
@@ -63,11 +66,11 @@ class CustomElevatedButton extends StatelessWidget {
   final String? prassedtime;
   @override
   Widget build(BuildContext context) {
+     
+    return Obx(() {
      if (prassedtime != null && selectedTime == prassedtime) {
         isSelected.value = true;
       }  
-    return Obx(() {
-     
       return ElevatedButton(
         onPressed: () {
           timeSlotController.selectedTimeSlot.value = selectedTime;

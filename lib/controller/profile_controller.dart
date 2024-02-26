@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfileController extends GetxController {
+
   final Rx<Stream<DocumentSnapshot<Map<String, dynamic>>>> userProfileStream =
       Rx<Stream<DocumentSnapshot<Map<String, dynamic>>>>(const Stream.empty());
 
@@ -13,8 +14,7 @@ class UserProfileController extends GetxController {
     getuserdatas();
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getResturentDatas(
-      userId) async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> getResturentDatas(userId) async {
     final DocumentSnapshot<Map<String, dynamic>> resturentCollection =
         await FirebaseFirestore.instance.collection('users').doc(userId).get();
     return resturentCollection;

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:user_dinny/view/login.dart';
-
-
+import 'package:user_dinny/view/screens/login.dart';
 
 
 void main() async {
@@ -11,7 +9,6 @@ void main() async {
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -22,17 +19,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 7, 11, 8)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 7, 11, 8)),
         useMaterial3: true,
       ),
-     initialRoute: '/',
-     getPages: [
-      GetPage(name:'/',page:()=>Login()),  
-      
-     ],
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () =>const Login() ),
+      ],
     );
   }
 }
-
-
-  

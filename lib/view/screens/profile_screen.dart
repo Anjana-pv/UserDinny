@@ -1,15 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_dinny/controller/profile_controller.dart';
-import 'package:user_dinny/view/edit_screen.dart';
-import 'package:user_dinny/view/login.dart';
-import 'package:user_dinny/view/privacy_policies.dart';
-import 'package:user_dinny/view/settings.dart';
-import 'package:user_dinny/view/terms_condition.dart';
+import 'package:user_dinny/view/screens/edit_screen.dart';
+import 'package:user_dinny/view/screens/login.dart';
+import 'package:user_dinny/view/screens/privacy_policies.dart';
+import 'package:user_dinny/view/screens/settings_screen.dart';
+import 'package:user_dinny/view/screens/terms_condition.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     UserProfileController profileInstance = Get.put(UserProfileController());
-    return Obx(() => StreamBuilder(  
+    return Obx(() => StreamBuilder(
           stream: profileInstance.userProfileStream.value,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -30,8 +29,7 @@ class ProfileScreen extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
-final userData = snapshot.data!.data() as Map<String, dynamic>;          
-               
+              final userData = snapshot.data!.data() as Map<String, dynamic>;
               return Scaffold(
                 body: Column(
                   children: [

@@ -6,13 +6,13 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
-import 'package:user_dinny/view/booking_conformation_screen.dart';
+import 'package:user_dinny/view/screens/booking_conformation_screen.dart';
 import 'package:user_dinny/view/common_widgets/client_details_container.dart';
 import 'package:user_dinny/view/common_widgets/custom_widgets.dart';
 import 'package:user_dinny/view/common_widgets/menucard_img.dart';
 import 'package:user_dinny/view/common_widgets/timeslot_widget.dart';
-import 'package:user_dinny/controller/booking.dart';
-import 'package:user_dinny/controller/calender.dart';
+import 'package:user_dinny/controller/booking_controller.dart';
+import 'package:user_dinny/controller/calender_controller.dart';
 
 GlobalKey<FormState> tableformKey = GlobalKey<FormState>();
 TimeOfDay? selectedTime;
@@ -25,8 +25,7 @@ class BookingScreen extends StatefulWidget {
     required this.id,
     required this.data,
     required this.isModify,
-     required this.bookingId,
-
+    required this.bookingId,
   }) : super(key: key);
   final String id;
   final Map<String, dynamic> data;
@@ -38,7 +37,7 @@ class BookingScreen extends StatefulWidget {
 
 final NewBookingController timeSlotController = Get.put(NewBookingController());
 
-DateTime selectedDate = DateTime.now();
+Rx<DateTime> selectedDate = DateTime.now().obs;
 BookingController booking = Get.put(BookingController());
 final NewBookingController newbooking = Get.put(NewBookingController());
 
@@ -51,7 +50,17 @@ class _BookingScreenState extends State<BookingScreen> {
     if (widget.isModify) {
       guestcount.value = widget.data['guest_count'] ?? '0';
       newbooking.guestcounController.text = guestcount.value;
+      String dateString = widget.data['date'] ?? '';
+
+      DateTime initialDateTime = dateString.isNotEmpty
+          ? DateFormat('dd MMM yyyy').parse(dateString)
+          : DateTime.now();
+
+      if (dateString.isNotEmpty) {
+        selectedDate.value = initialDateTime;
+      }
     }
+
     super.initState();
   }
 
@@ -147,20 +156,27 @@ class _BookingScreenState extends State<BookingScreen> {
                           DateTime initialDateTime = dateString.isNotEmpty
                               ? DateFormat('dd MMM yyyy').parse(dateString)
                               : DateTime.now();
-
+                          final now = DateTime.now();
                           DateTime? pickedDate = await showDatePicker(
                             context: context,
                             initialDate: initialDateTime,
                             firstDate: DateTime(2024),
                             lastDate: DateTime(2025),
+                            selectableDayPredicate: (DateTime day) =>
+                                !day.isBefore(
+                                    now.subtract(const Duration(days: 1))),
                           );
+
                           if (pickedDate != null &&
                               pickedDate != selectedDate) {
-                            selectedDate = pickedDate;
-                            booking.selectedDate(selectedDate);
+                            selectedDate.value = 
+                                    selectedDate != initialDateTime
+                                ? initialDateTime
+                                : pickedDate;
+                            booking.selectedDate(selectedDate.value);
                           }
                           booking.formattedDate.value =
-                              DateFormat('d MMM y').format(selectedDate);
+                              DateFormat('d MMM y').format(selectedDate.value);
                         },
                         child: const Padding(
                           padding: EdgeInsets.only(right: 30),
@@ -285,34 +301,34 @@ class _BookingScreenState extends State<BookingScreen> {
 
                       Get.to(
                         BookingConfirmation(
-                          userData: userData,
-                          restaurantName: widget.isModify
-                              ? widget.data['resturent_name'] ?? ''
-                              : widget.data['restaurantName'],
-                          location: widget.isModify
-                              ? widget.data['location'] ?? ''
-                              : widget.data['address'] ?? '',
-                          bookingTime: timeSlotController.selectedTimeSlot.value
-                              .toString(),
-                          bookingDate: booking.formattedDate.value,
-                          guestCount: newbooking.guestcounController.text,
-                          restaurantId: widget.id,
-                          tableType: newbooking.selectedTableType.string,
-                          email:
-                              widget.isModify ? '' : widget.data['email'] ?? '',
-                          profileImage: widget.isModify
-                              ? widget.data['profile_image'] ?? ''
-                              : widget.data['profileImage'] ?? '',
-                          manucard: widget.isModify
-                              ? widget.data['menu_cards'] ?? []
-                              : widget.data['menuCards'] ?? [],
-                          endingTime: widget.data['endingtime'] ?? '',
-                          startingTime: widget.data['startingtime'] ?? '',
-                          city: widget.data['city'] ?? '', 
-                          isModify: widget.isModify,
-                           bookingId:widget.bookingId
-
-                        ),
+                            userData: userData,
+                            restaurantName: widget.isModify
+                                ? widget.data['resturent_name'] ?? ''
+                                : widget.data['restaurantName'],
+                            location: widget.isModify
+                                ? widget.data['location'] ?? ''
+                                : widget.data['address'] ?? '',
+                            bookingTime: timeSlotController
+                                .selectedTimeSlot.value
+                                .toString(),
+                            bookingDate: booking.formattedDate.value,
+                            guestCount: newbooking.guestcounController.text,
+                            restaurantId: widget.id,
+                            tableType: newbooking.selectedTableType.string,
+                            email: widget.isModify
+                                ? ''
+                                : widget.data['email'] ?? '',
+                            profileImage: widget.isModify
+                                ? widget.data['profile_image'] ?? ''
+                                : widget.data['profileImage'] ?? '',
+                            manucard: widget.isModify
+                                ? widget.data['menu_cards'] ?? []
+                                : widget.data['menuCards'] ?? [],
+                            endingTime: widget.data['endingtime'] ?? '',
+                            startingTime: widget.data['startingtime'] ?? '',
+                            city: widget.data['city'] ?? '',
+                            isModify: widget.isModify,
+                            bookingId: widget.bookingId),
                       );
                       log("${widget.data['time'] ?? ''}");
                     },

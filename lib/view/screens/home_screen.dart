@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
-import 'package:user_dinny/view/booking_history.dart';
-import 'package:user_dinny/view/first_screen.dart';
-import 'package:user_dinny/view/profile_screen.dart';
-import 'package:user_dinny/view/search_screen.dart';
+import 'package:user_dinny/view/screens/booking_history.dart';
+import 'package:user_dinny/view/screens/first_screen.dart';
+import 'package:user_dinny/view/screens/profile_screen.dart';
+import 'package:user_dinny/view/screens/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/view/common_widgets/table_dropdown.dart';
-import 'package:user_dinny/controller/authendication.dart';
+import 'package:user_dinny/view/common_widgets/custom_textfeild.dart';
+import 'package:user_dinny/controller/auth_controller.dart';
 import 'package:user_dinny/styling/colors.dart';
-import 'package:user_dinny/view/home_screen.dart';
+import 'package:user_dinny/view/screens/home_screen.dart';
 
 
 TextEditingController passwordcontroller = TextEditingController();
@@ -90,7 +90,7 @@ class SignupScreen extends StatelessWidget {
 
                       if (authController.user.value != null) {
                        
-                        Get.to(HomeScreen());
+                        Get.to(const HomeScreen());
                       }
                     }
                   }),

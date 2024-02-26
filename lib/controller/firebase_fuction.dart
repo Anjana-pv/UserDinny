@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController extends GetxController {
-  @override
+
 
   final db = FirebaseFirestore.instance;
   Stream<QuerySnapshot> getAccepted() {

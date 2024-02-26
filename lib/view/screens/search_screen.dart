@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
-import 'package:user_dinny/view/booking_scree.dart';
-import 'package:user_dinny/view/home_screen.dart';
+import 'package:user_dinny/view/screens/booking_scree.dart';
+import 'package:user_dinny/view/screens/home_screen.dart';
 
 Rx<String> searchvalue = ''.obs;
 final usercontroller = Get.put(UserController());

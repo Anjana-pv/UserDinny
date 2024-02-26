@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:user_dinny/model/booking_model.dart';
+import 'package:user_dinny/model/booking.dart';
 
 class BookingHistory extends GetxController {
   final Rx<Stream<QuerySnapshot<Object?>>> bookingStream =

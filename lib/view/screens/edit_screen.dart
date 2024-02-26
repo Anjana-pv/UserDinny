@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/controller/editcontroller.dart';
+import 'package:user_dinny/controller/editpro_controller.dart';
 
 class EditScreen extends StatefulWidget {
   const EditScreen(

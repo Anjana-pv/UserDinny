@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/controller/booking.dart';
+import 'package:user_dinny/controller/booking_controller.dart';
 import 'package:user_dinny/view/common_widgets/custom_widgets.dart';
 import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/styling/textsytling.dart';
-import 'package:user_dinny/view/booking_scree.dart';
+import 'package:user_dinny/view/screens/booking_scree.dart';
 import 'package:user_dinny/view/common_widgets/offer_widget.dart';
-import 'package:user_dinny/view/search_screen.dart';
+import 'package:user_dinny/view/screens/search_screen.dart';
 
 class ScreenFirst extends StatelessWidget {
   const ScreenFirst({super.key});
@@ -54,7 +54,6 @@ class ScreenFirst extends StatelessWidget {
                         child: TextField(
                           onTap: () {
                             FocusManager.instance.primaryFocus?.unfocus();
-
                             Get.to(const SearchScreen());
                           },
                           decoration: const InputDecoration(

@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_dinny/controller/booking.dart';
-import 'package:user_dinny/controller/booking_history.dart';
-import 'package:user_dinny/model/booking_model.dart';
-import 'package:user_dinny/view/payment.dart';
+import 'package:user_dinny/controller/booking_controller.dart';
+import 'package:user_dinny/controller/bookinglog_controller.dart';
+import 'package:user_dinny/model/booking.dart';
+import 'package:user_dinny/view/screens/first_screen.dart';
+import 'package:user_dinny/view/screens/home_screen.dart';
+import 'package:user_dinny/view/screens/payment.dart';
 
 class BookingConfirmation extends StatelessWidget {
   const BookingConfirmation(
@@ -221,7 +223,7 @@ class BookingConfirmation extends StatelessWidget {
                         ),
                         minimumSize:
                             MaterialStateProperty.all(const Size(300, 40)),
-                        // Adjust the size as needed
+                      
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -265,6 +267,8 @@ class BookingConfirmation extends StatelessWidget {
                 if (responce) {
                   Get.snackbar('success', 'Your table is reserved',
                       backgroundColor: Colors.green);
+                    
+                     
                 } else {
                   Get.snackbar('failed', 'Check your internet connection',
                       backgroundColor: Colors.red);

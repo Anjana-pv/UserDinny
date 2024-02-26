@@ -5,7 +5,7 @@ class GoogleFontText extends StatelessWidget {
   final customeText;
   final size;
  final FontWeight? type;
-   GoogleFontText({
+   const GoogleFontText({
     super.key,
   required this.customeText, 
    required  this.size,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+
 
 class RazorpayScreeen extends StatefulWidget {
   const RazorpayScreeen({super.key});
@@ -16,7 +19,7 @@ class _RazorpayScreeenState extends State<RazorpayScreeen> {
   void openamount(amount)async{
     amount=amount*100;
     var options ={
-      'key':'rzp_test_mYEIb1JhBAjCQk',
+      'key':'rzp_test_1DP5mmOlF5G5ag',
       'amount':amount,
       'name':"Our_Dinny",
       'prefill':{"contact":'1234567890','email':'text@gmail.com'},
@@ -34,15 +37,21 @@ class _RazorpayScreeenState extends State<RazorpayScreeen> {
   }
  void handlePaymentSuccess(PaymentSuccessResponse response) {
   Fluttertoast.showToast(
-    msg: "Payment successful${response.paymentId!}",
+    backgroundColor: Colors.green,
+    
+    msg: "Payment successful",
     toastLength: Toast.LENGTH_SHORT, 
-  );
+    
+  ).then((value) => Get.back());
+
+
 }
  void handlePaymentError(PaymentFailureResponse response) {
   Fluttertoast.showToast(
     msg: "Payment fail${response.message!}",
     toastLength: Toast.LENGTH_SHORT, 
   );
+ 
 }
 void handleExternalWallet(ExternalWalletResponse response) {
   Fluttertoast.showToast(
@@ -135,7 +144,7 @@ void initState(){
         ),
         )
       ]
-      ),
+      ), 
       
      ),
 

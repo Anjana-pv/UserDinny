@@ -1,4 +1,3 @@
-import 'package:get/get_connect/http/src/request/request.dart';
 
 class BookingModel {
   final String date;

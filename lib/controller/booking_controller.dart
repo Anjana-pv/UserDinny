@@ -57,7 +57,7 @@ class NewBookingController extends GetxController {
   }
 
 // -----------------------------------------------------------------------
-  Future<bool> newbooking(BookingModel book) async {
+  Future<bool> newbooking(BookingModel book,String resId) async {
     Map<String, dynamic> bookinfo = {
       'date': book.date,
       'time': book.time,
@@ -68,29 +68,53 @@ class NewBookingController extends GetxController {
       'phone_number': book.phoneNumber,
       'profile_image': book.profileImage,
       'resturent_name': book.nameofresto,
+      'resturent_id': book.resturentId,
       'menu_cards': book.manucard,
       'startedtime': book.startingTime,
       'endingtime': book.endingTime,
       'location': book.location,
-      'city': book.city
+      'city': book.city,
+      'timestamp': DateTime.now()
     };
     try {
-      await FirebaseFirestore.instance
-          .collection('approvedOne')
-          .doc(book.resturentId)
-          .collection('bookings')
-          .add(bookinfo);
-      await FirebaseFirestore.instance
+      final data = await FirebaseFirestore.instance
           .collection('users')
           .doc(book.userId)
           .collection('user_bookings')
           .add(bookinfo);
-
+    
+      final userBookingId = data.id;
+     Map<String, dynamic> bookinfoUser = {
+      'date': book.date,
+      'time': book.time,
+      'table_type': book.tableType,
+      'guest_count': book.guestCount,
+      'user_id': book.userId,
+      'user_name': book.userName,
+      'phone_number': book.phoneNumber,
+      'profile_image': book.profileImage,
+      'resturent_name': book.nameofresto,
+      'resturent_id': book.resturentId,
+      'menu_cards': book.manucard,
+      'startedtime': book.startingTime,
+      'endingtime': book.endingTime,
+      'location': book.location,
+      'city': book.city,
+    
+      'booking_id':userBookingId
+    };
+      
+      await FirebaseFirestore.instance
+          .collection('approvedOne')
+          .doc(resId)
+          .collection('bookings')
+          .add(bookinfoUser);
       return true;
     } catch (e) {
       return false;
     }
   }
+
 // ---------------------------------------------------------------------------
   Stream<QuerySnapshot<Object?>> getResturentDatas(userId) {
     final CollectionReference resturentCollection = FirebaseFirestore.instance
@@ -109,6 +133,7 @@ class NewBookingController extends GetxController {
       return const Stream.empty();
     }
   }
+
 // --------------------------------------------------------------------------
   Future<bool> userBooking(BookingModel book) async {
     Map<String, dynamic> bookinfo = {
@@ -132,6 +157,7 @@ class NewBookingController extends GetxController {
       return false;
     }
   }
+
 // ---------------------------------------------------------------------------------------
   Future<void> fetchBookingHistory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -148,6 +174,7 @@ class NewBookingController extends GetxController {
     final resturentStream = resturentCollection.snapshots();
     return resturentStream;
   }
+
 // -----------------------------------------------------------------------------------------------
   Stream<QuerySnapshot<Object?>> getoffering() {
     final CollectionReference accepted =

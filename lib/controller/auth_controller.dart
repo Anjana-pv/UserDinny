@@ -1,19 +1,19 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_dinny/view/screens/home_screen.dart';
-
+import 'package:user_dinny/view/screens/splash_screen.dart';
 
 class AuthController extends GetxController {
-
   TextEditingController passwordcontroller = TextEditingController();
-TextEditingController emailcontrooller = TextEditingController();
+  TextEditingController emailcontrooller = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Rx<User?> user = Rx<User?>(null);
+  var isLoggedIn = false.obs;
+
   @override
   void onInit() {
     user.bindStream(_auth.authStateChanges());
@@ -46,42 +46,35 @@ TextEditingController emailcontrooller = TextEditingController();
           'password': password,
         });
       }
-
+      SharedPreferences prefsId = await SharedPreferences.getInstance();
+      await prefsId.setBool('isLogined', true);
       user.value = userCredential.user;
     } catch (e) {
-  
-
       throw e;
     }
   }
 
-  
-Future<void> login(String email, String password) async {
-  
+  Future<void> login(String email, String password) async {
     QuerySnapshot acceptedSnapshot = await FirebaseFirestore.instance
         .collection('users')
-        .where('email', 
-        isEqualTo: emailcontrooller.text)
-        .where('password',
-       isEqualTo:passwordcontroller.text) 
+        .where('email', isEqualTo: emailcontrooller.text)
+        .where('password', isEqualTo: passwordcontroller.text)
         .get();
 
-   
     if (acceptedSnapshot.docs.isNotEmpty) {
       final DocumentSnapshot usersDoc = acceptedSnapshot.docs.first;
-      final String userId=usersDoc.id;
-       SharedPreferences prefsTeacherId =
-            await SharedPreferences.getInstance();
-        prefsTeacherId.setString('getuser_id',userId);
+      final String userId = usersDoc.id;
+      SharedPreferences prefsId = await SharedPreferences.getInstance();
+      prefsId.setString('getuser_id', userId);
       Get.off(const HomeScreen());
       emailcontrooller.clear();
       passwordcontroller.clear();
-     
+
+      await prefsId.setBool('isLogined', true);
       return;
     }
-   
 
-     Get.snackbar(
+    Get.snackbar(
       'Error',
       'Invalid email or password',
       snackPosition: SnackPosition.BOTTOM,
@@ -89,16 +82,26 @@ Future<void> login(String email, String password) async {
       colorText: Colors.white,
     );
 
+    Future<void> signOut() async {
+      try {
+        await _auth.signOut();
+        user.value = null;
+      } catch (e) {
+        print("Error in sign out: $e");
 
-  Future<void> signOut() async {
-    try {
-      await _auth.signOut();
-      user.value = null;
-    } catch (e) {
-      print("Error in sign out: $e");
-
-      throw e;
+        throw e;
+      }
     }
   }
-}
+
+  Future<bool> checkLoggedInStatus() async {
+    SharedPreferences prefsId = await SharedPreferences.getInstance();
+    return prefsId.getBool('isLogined') ?? false;
+  }
+
+  Future<void> logout() async {
+    SharedPreferences prefsId = await SharedPreferences.getInstance();
+    await prefsId.setBool('isLogined', false);
+    Get.offAll(SplashScreen());
+  }
 }

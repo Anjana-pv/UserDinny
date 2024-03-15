@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,6 +48,7 @@ class ScreenBookingHistory extends StatelessWidget {
                     var resturentName = bookingData['resturent_name']?? '';
                   var bookingDate = bookingData['date'] ?? '';
                   var guestCount = bookingData['guest_count'] ?? '';
+                  // var tabletype=bookingData['table_type']??'';
                   var bookingTime = bookingData['time'] ?? '';
                   String profileimage = bookingData['profile_image'] ?? '';
 
@@ -138,12 +141,11 @@ class ScreenBookingHistory extends StatelessWidget {
                               children: [
                                 TextButton(
                                   onPressed: () { 
-                                    
-                              Get.to(BookingScreen(id: bookingId, data:bookingData, isModify: true, bookingId: bookingId, ));
+                              Get.to(BookingScreen(id: bookingData['resturent_id'] ?? '', data:bookingData, isModify: true, bookingId: bookingId, resId:bookingData['resturent_id'] ?? '' ,));
                                   },
                                   child: const Text('Modify Order'),
                                 ),
-                                TextButton(
+                                TextButton( 
                                   onPressed: () async {
                                    
                                     bool confirmed = await showDialog(

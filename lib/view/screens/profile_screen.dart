@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_dinny/controller/auth_controller.dart';
 import 'package:user_dinny/controller/profile_controller.dart';
 import 'package:user_dinny/view/screens/edit_screen.dart';
 import 'package:user_dinny/view/screens/login.dart';
@@ -17,6 +18,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     UserProfileController profileInstance = Get.put(UserProfileController());
+    AuthController authController=Get.put(AuthController());
     return Obx(() => StreamBuilder(
           stream: profileInstance.userProfileStream.value,
           builder: (context, snapshot) {
@@ -159,7 +161,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     ListTile(
                       onTap: () {
-                        _logoutUser();
+                       authController.logout();
                       },
                       leading: const Icon(Icons.logout),
                       title: const Text(

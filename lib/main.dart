@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:user_dinny/view/screens/login.dart';
+import 'package:user_dinny/view/screens/home_screen.dart';
+import 'package:user_dinny/view/screens/splash_screen.dart';
+
 
 
 void main() async {
@@ -25,8 +27,11 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () =>const Login() ),
+        GetPage(name: '/', page:()=>  const SplashScreen()),
+       GetPage(name: '/home', page:()=>  const HomeScreen()),
+       
       ],
     );
   }
 }
+

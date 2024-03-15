@@ -77,10 +77,11 @@ class SearchScreen extends StatelessWidget {
                     itemCount: filteredRestaurants.length,
                     itemBuilder: (context, index) {
                       var restaurant = filteredRestaurants[index];
-
+                        
                       return GestureDetector(
                         onTap: () {
                           Get.to(BookingScreen(
+                            resId:restaurant.id ,
                             isModify: false,
                             id: restaurant.id,
                             data: restaurant.data()! as Map<String, dynamic>, bookingId: '',

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +19,7 @@ GlobalKey<FormState> tableformKey = GlobalKey<FormState>();
 TimeOfDay? selectedTime;
 String? selectedTableType;
 final Rx<String> selectedTimeSlot = ''.obs;
+Rx<String> timeSlot = ''.obs;
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({
@@ -25,12 +27,15 @@ class BookingScreen extends StatefulWidget {
     required this.id,
     required this.data,
     required this.isModify,
-    required this.bookingId,
+    required this.bookingId, 
+    required this.resId,
   }) : super(key: key);
   final String id;
   final Map<String, dynamic> data;
   final bool isModify;
   final String bookingId;
+  final String resId;
+
   @override
   State<BookingScreen> createState() => _BookingScreenState();
 }
@@ -51,6 +56,7 @@ class _BookingScreenState extends State<BookingScreen> {
       guestcount.value = widget.data['guest_count'] ?? '0';
       newbooking.guestcounController.text = guestcount.value;
       String dateString = widget.data['date'] ?? '';
+      timeSlot.value = widget.data['time'] ?? '';
 
       DateTime initialDateTime = dateString.isNotEmpty
           ? DateFormat('dd MMM yyyy').parse(dateString)
@@ -159,7 +165,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           final now = DateTime.now();
                           DateTime? pickedDate = await showDatePicker(
                             context: context,
-                            initialDate: initialDateTime,
+                            initialDate: selectedDate.value,
                             firstDate: DateTime(2024),
                             lastDate: DateTime(2025),
                             selectableDayPredicate: (DateTime day) =>
@@ -169,8 +175,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
                           if (pickedDate != null &&
                               pickedDate != selectedDate) {
-                            selectedDate.value = 
-                                    selectedDate != initialDateTime
+                            selectedDate.value = selectedDate != initialDateTime
                                 ? initialDateTime
                                 : pickedDate;
                             booking.selectedDate(selectedDate.value);
@@ -296,11 +301,14 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
+                     log(widget.id);
                       final Map<String, dynamic> userData =
                           await auth.getuserdata();
-
+                       
+                        
                       Get.to(
                         BookingConfirmation(
+                              
                             userData: userData,
                             restaurantName: widget.isModify
                                 ? widget.data['resturent_name'] ?? ''
@@ -309,11 +317,19 @@ class _BookingScreenState extends State<BookingScreen> {
                                 ? widget.data['location'] ?? ''
                                 : widget.data['address'] ?? '',
                             bookingTime: timeSlotController
-                                .selectedTimeSlot.value
-                                .toString(),
-                            bookingDate: booking.formattedDate.value,
+                                    .selectedTimeSlot.value.isEmpty
+                                ? timeSlot.value
+                                : timeSlotController.selectedTimeSlot.value
+                                    .toString(),
+                            bookingDate: booking.formattedDate.value.isEmpty
+                                ? DateFormat('d MMM y')
+                                    .format(selectedDate.value)
+                                  
+                                 : booking.formattedDate.value,
+                                
                             guestCount: newbooking.guestcounController.text,
                             restaurantId: widget.id,
+
                             tableType: newbooking.selectedTableType.string,
                             email: widget.isModify
                                 ? ''
@@ -328,9 +344,11 @@ class _BookingScreenState extends State<BookingScreen> {
                             startingTime: widget.data['startingtime'] ?? '',
                             city: widget.data['city'] ?? '',
                             isModify: widget.isModify,
-                            bookingId: widget.bookingId),
+                            bookingId: widget.bookingId,
+                             resturendbokingId:widget.isModify
+                                ? widget.data['booking_id']:null),
+                          
                       );
-                      log("${widget.data['time'] ?? ''}");
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
@@ -339,7 +357,9 @@ class _BookingScreenState extends State<BookingScreen> {
                     child: Text(
                       widget.isModify ? "Update Booking" : '   Book Now   ',
                       style: const TextStyle(color: Colors.white),
-                    ))
+                    )
+                    
+                     )
               ]),
             ),
           ),

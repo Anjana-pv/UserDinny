@@ -1,35 +1,38 @@
+import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/booking_controller.dart';
 import 'package:user_dinny/controller/bookinglog_controller.dart';
 import 'package:user_dinny/model/booking.dart';
-import 'package:user_dinny/view/screens/first_screen.dart';
-import 'package:user_dinny/view/screens/home_screen.dart';
 import 'package:user_dinny/view/screens/payment.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BookingConfirmation extends StatelessWidget {
-  const BookingConfirmation(
-      {Key? key,
-      required this.restaurantName,
-      required this.location,
-      required this.bookingTime,
-      required this.bookingDate,
-      required this.guestCount,
-      required this.restaurantId,
-      required this.tableType,
-      required this.email,
-      required this.userData,
-      required this.profileImage,
-      required this.endingTime,
-      required this.startingTime,
-      required this.manucard, 
-      required this.city,
-      required this.isModify,
-      required this.bookingId})
-      : super(key: key);
+  const BookingConfirmation({
+    Key? key,
+    required this.restaurantName,
+    required this.location,
+    required this.bookingTime,
+    required this.bookingDate,
+    required this.guestCount,
+    required this.restaurantId,
+    required this.tableType,
+    required this.email,
+    required this.userData,
+    required this.profileImage,
+    required this.endingTime,
+    required this.startingTime,
+    required this.manucard,
+    required this.city,
+    required this.isModify,
+    required this.bookingId,
+    required this.resturendbokingId,
+  }) : super(key: key);
 
   final String restaurantName;
+  
   final String location;
   final String bookingTime;
   final String bookingDate;
@@ -43,14 +46,15 @@ class BookingConfirmation extends StatelessWidget {
   final String endingTime;
   final bool isModify;
   final String bookingId;
-  
+  final String? resturendbokingId;
+
   final String city;
   final Map<String, dynamic> userData;
 
   @override
   Widget build(BuildContext context) {
     NewBookingController newbooking = Get.put(NewBookingController());
- BookingHistory updatebooking = Get.put(BookingHistory());
+    BookingHistory updatebooking = Get.put(BookingHistory());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -194,52 +198,52 @@ class BookingConfirmation extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            isModify?Row(): 
-            Container(
-              height: 150,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: const Color.fromARGB(255, 255, 255, 255),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    const Text(
-                      '* To secure your booking, there is a booking fee of Rs 200. This fee will be deducted from your final bill payment.',
+            isModify
+                ? const Row()
+                : Container(
+                    height: 150,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color.fromARGB(255, 255, 255, 255),
                     ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        Get.to(const RazorpayScreeen());
-                      },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            return const Color.fromARGB(123, 20, 77, 14);
-                          },
-                        ),
-                        minimumSize:
-                            MaterialStateProperty.all(const Size(300, 40)),
-                      
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            '* To secure your booking, there is a booking fee of Rs 200. This fee will be deducted from your final bill payment.',
                           ),
-                        ),
-                      ),
-                      child: const Text(
-                        'Advance Payment',
-                        style: TextStyle(color: Colors.white),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {
+                              Get.to(const RazorpayScreeen());
+                            },
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  return const Color.fromARGB(123, 20, 77, 14);
+                                },
+                              ),
+                              minimumSize: MaterialStateProperty.all(
+                                  const Size(300, 40)),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              ),
+                            ),
+                            child: const Text(
+                              'Advance Payment',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
             const SizedBox(
               height: 30,
             ),
@@ -257,24 +261,27 @@ class BookingConfirmation extends StatelessWidget {
                   profileImage: profileImage,
                   nameofresto: restaurantName,
                   manucard: manucard,
-                   startingTime:startingTime, 
-                   endingTime: endingTime,
-                    location: location,
-                     city: city, 
+                  startingTime: startingTime,
+                  endingTime: endingTime,
+                  location: location,
+                  city: city,
                 );
 
-                final responce =  isModify? await updatebooking.updatebooking(bookingData, bookingId) : await newbooking.newbooking(bookingData);
+              
+
+                final responce = isModify
+                    ? await updatebooking.updatebooking(bookingData, bookingId, restaurantId)
+                    : await newbooking.newbooking(bookingData,restaurantId);
+
                 if (responce) {
-                  Get.snackbar('success', 'Your table is reserved',
-                      backgroundColor: Colors.green);
-                    
+               Fluttertoast.showToast(msg: "Success");
+                   Get.back();
+                   Get.back();
                      
                 } else {
-                  Get.snackbar('failed', 'Check your internet connection',
+                  Get.snackbar('fail', 'Your table is not reserved',
                       backgroundColor: Colors.red);
                 }
-
-                
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith<Color>(
@@ -289,8 +296,8 @@ class BookingConfirmation extends StatelessWidget {
                   ),
                 ),
               ),
-              child:   Text(isModify?'Confirm':
-                'Submit',
+              child: Text(
+                isModify ? 'Confirm' : 'Submit',
                 style: TextStyle(color: Colors.white),
               ),
             ),

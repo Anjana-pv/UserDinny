@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -70,9 +72,67 @@ class ScreenFirst extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 10),
+                child: Row(
+                  children: [
+                    GoogleFontText(
+                        customeText: ' Best Offers',
+                        size: textSizeMultiplier,
+                        type: FontWeight.normal),
+                  ],
+                ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              OfferWidget(offerimage: offerimage),
+              
+              const SizedBox(
+                height: 20,
+              ),Padding(
+                padding: EdgeInsets.only(
+                  left: paddingMultiplier,
+                ),
+                child: Row(
+                  children: [
+                    GoogleFontText(
+                        customeText: '  Your Favariote',
+                        size: textSizeMultiplier,
+                        type: FontWeight.normal),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                height: containerHeightMultiplier * 0.35,
+                child: Wrap(
+                  spacing: -0.0,
+                  runSpacing: 10.0,
+                  children: List.generate(5, (index) {
+                    List<String> imageslist = [
+                      'assest/images/rice.jpg',
+                      'assest/images/fast food.jpg',
+                      'assest/images/drinks.jpg',
+                      'assest/images/coofie.jpg',
+                      'assest/images/chinees.jpg'
+                    ];
+
+                    return Padding(
+                      padding: EdgeInsets.all(paddingMultiplier * 0.5),
+                      child: CircleAvatar(
+                        radius: containerHeightMultiplier * 0.175,
+                        backgroundColor: Colors.blue,
+                        backgroundImage: AssetImage(imageslist[index]),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+              SizedBox(height: 20,),
               Padding(
                 padding: EdgeInsets.all(paddingMultiplier),
                 child: Row(
@@ -114,7 +174,9 @@ class ScreenFirst extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: GestureDetector(
                                 onTap: () {
+                                  log(id);
                                   Get.to(BookingScreen(
+                                    resId:id ,
                                     bookingId: "",
                                     isModify: false,
                                     data: data,
@@ -127,68 +189,12 @@ class ScreenFirst extends StatelessWidget {
                           },
                         );
                       })),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: paddingMultiplier,
-                ),
-                child: Row(
-                  children: [
-                    GoogleFontText(
-                        customeText: '  Your Favariote',
-                        size: textSizeMultiplier,
-                        type: FontWeight.normal),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: containerHeightMultiplier * 0.35,
-                child: Wrap(
-                  spacing: -0.0,
-                  runSpacing: 10.0,
-                  children: List.generate(5, (index) {
-                    List<String> imageslist = [
-                      'assest/images/rice.jpg',
-                      'assest/images/fast food.jpg',
-                      'assest/images/drinks.jpg',
-                      'assest/images/coofie.jpg',
-                      'assest/images/chinees.jpg'
-                    ];
-
-                    return Padding(
-                      padding: EdgeInsets.all(paddingMultiplier * 0.5),
-                      child: CircleAvatar(
-                        radius: containerHeightMultiplier * 0.175,
-                        backgroundColor: Colors.blue,
-                        backgroundImage: AssetImage(imageslist[index]),
-                      ),
-                    );
-                  }),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, top: 10),
-                child: Row(
-                  children: [
-                    GoogleFontText(
-                        customeText: ' Best Offers',
-                        size: textSizeMultiplier,
-                        type: FontWeight.normal),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              OfferWidget(offerimage: offerimage)
+              
+              
               // MyCards(),
             ],
           ),
-        ));
+        )
+        );
   }
 }

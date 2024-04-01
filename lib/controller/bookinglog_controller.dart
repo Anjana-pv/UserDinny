@@ -28,7 +28,7 @@ class BookingHistory extends GetxController {
 
       return userBookingsStream;
     } else {
-      return Stream.empty();
+      return const Stream.empty();
     }
   }
 // ===========Get userdata============================================================
@@ -38,7 +38,7 @@ class BookingHistory extends GetxController {
     userId = getuserId.getString('getuser_id');
     bookingStream.value = getBooking();
   }
-
+// ================cancel data===========================================
   Future<void> cancelBooking(
       String bookingId, Map<String, dynamic> bookingData) async {
     try {
@@ -58,16 +58,14 @@ class BookingHistory extends GetxController {
         getuserdata();
       }
     } catch (e) {
-      print("Error cancelling booking: $e");
+      log("Error cancelling booking: $e");
     }
   }
-// =====================================Cancel==============================
+// =====================================update==============================
 
   Future<bool> updatebooking(
-      BookingModel book, String bookingId,String resId) async {
-        
-    String? matchingDocId =
-        await getDocumentIdByBookingId(bookingId, resId);
+      BookingModel book, String bookingId, String resId) async {
+    String? matchingDocId = await getDocumentIdByBookingId(bookingId, resId);
 
     Map<String, dynamic> resbookinfo = {
       'date': book.date,
@@ -105,8 +103,7 @@ class BookingHistory extends GetxController {
       'city': book.city,
     };
     try {
-      
-       await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('approvedOne')
           .doc(resId)
           .collection('bookings')
@@ -126,8 +123,7 @@ class BookingHistory extends GetxController {
     }
   }
 
-  Future<String?> getDocumentIdByBookingId(
-String bookingId, String resturentId) async {
+  Future<String?> getDocumentIdByBookingId(String bookingId, String resturentId) async {
     QuerySnapshot acceptedSnapshot = await FirebaseFirestore.instance
         .collection('approvedOne')
         .doc(resturentId)

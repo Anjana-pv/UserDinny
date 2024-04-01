@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user_dinny/controller/profile_controller.dart';
+import 'package:user_dinny/view/screens/login.dart';
+
 
 class SettingsScreeen extends StatelessWidget {
   const SettingsScreeen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    UserProfileController userprofile=Get.put(UserProfileController());
     return Scaffold(
         appBar: AppBar(
           title: const Text('Settings'),
@@ -15,7 +19,8 @@ class SettingsScreeen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: (){
-                
+               userprofile.deleteUser();
+               Get.off(const Login());
             },
             child: Column(
               children: [

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,12 +47,20 @@ class AuthController extends GetxController {
           'phoneNumber': phoneNumber,
           'password': password,
         });
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection("favorites")
+            .doc(userId)
+            .set({
+          "favorites": [],
+        });
       }
       SharedPreferences prefsId = await SharedPreferences.getInstance();
       await prefsId.setBool('isLogined', true);
       user.value = userCredential.user;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -87,9 +97,9 @@ class AuthController extends GetxController {
         await _auth.signOut();
         user.value = null;
       } catch (e) {
-        print("Error in sign out: $e");
+        log("Error in sign out: $e");
 
-        throw e;
+        rethrow;
       }
     }
   }
@@ -102,6 +112,6 @@ class AuthController extends GetxController {
   Future<void> logout() async {
     SharedPreferences prefsId = await SharedPreferences.getInstance();
     await prefsId.setBool('isLogined', false);
-    Get.offAll(SplashScreen());
+    Get.offAll(const SplashScreen());
   }
 }

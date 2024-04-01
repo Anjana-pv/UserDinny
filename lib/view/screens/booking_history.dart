@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/controller/bookinglog_controller.dart';
 import 'package:user_dinny/view/screens/booking_scree.dart';
+
 
 class ScreenBookingHistory extends StatelessWidget {
   const ScreenBookingHistory({super.key,});
@@ -12,17 +11,18 @@ class ScreenBookingHistory extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     BookingHistory fetchBookingData = Get.put(BookingHistory());
- 
-
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back_ios),
+        title: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text('My Bookings', style: TextStyle(
+            fontSize: 21,
+
+            fontWeight: FontWeight.w400,
+          ),
         ),
-        title: const Text('My Bookings'),
+      ),
+
       ),
       backgroundColor: const Color.fromARGB(255, 205, 204, 204),
       body: Obx(

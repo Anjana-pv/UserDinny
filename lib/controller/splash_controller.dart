@@ -7,20 +7,21 @@ class SplashController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 3), () {
       checkLoginStatus();
     });
   }
 
-  Future<void> checkLoginStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isLoggedIn = prefs.getBool('isLogined') ?? false;
-    if (isLoggedIn) {
-      Get.to(HomeScreen());
-    } else {
-      Get.to(Login());
-    }
+ Future<void> checkLoginStatus() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLogined') ?? false;
+  if (isLoggedIn) {
+    Get.off(const HomeScreen());
+  } else {
+    Get.off(const Login());
   }
+}
+
 }
   
 

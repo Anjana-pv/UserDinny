@@ -37,4 +37,5 @@ class UserProfileController extends GetxController {
       log('Error deleting user: $error');
     }
   }
+  
 }

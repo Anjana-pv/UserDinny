@@ -15,7 +15,7 @@ class RazorpayScreeen extends StatefulWidget {
 class _RazorpayScreeenState extends State<RazorpayScreeen> {
   late Razorpay _razorepay;
   TextEditingController amtcontroller=TextEditingController();
-
+  
   void openamount(amount)async{
     amount=amount*100;
     var options ={

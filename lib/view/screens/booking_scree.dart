@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +25,7 @@ class BookingScreen extends StatefulWidget {
     required this.id,
     required this.data,
     required this.isModify,
-    required this.bookingId, 
+    required this.bookingId,
     required this.resId,
   }) : super(key: key);
   final String id;
@@ -89,6 +87,7 @@ class _BookingScreenState extends State<BookingScreen> {
             style: GoogleFonts.lemon(
               textStyle: const TextStyle(
                 fontSize: 20,
+
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -301,14 +300,13 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                     log(widget.id);
+                      log(widget.id);
                       final Map<String, dynamic> userData =
-                          await auth.getuserdata();
-                       
-                        
+                          await auth.getUserData();
+
+                      log(userData.entries.toString());
                       Get.to(
                         BookingConfirmation(
-                              
                             userData: userData,
                             restaurantName: widget.isModify
                                 ? widget.data['resturent_name'] ?? ''
@@ -324,12 +322,9 @@ class _BookingScreenState extends State<BookingScreen> {
                             bookingDate: booking.formattedDate.value.isEmpty
                                 ? DateFormat('d MMM y')
                                     .format(selectedDate.value)
-                                  
-                                 : booking.formattedDate.value,
-                                
+                                : booking.formattedDate.value,
                             guestCount: newbooking.guestcounController.text,
                             restaurantId: widget.id,
-
                             tableType: newbooking.selectedTableType.string,
                             email: widget.isModify
                                 ? ''
@@ -345,9 +340,9 @@ class _BookingScreenState extends State<BookingScreen> {
                             city: widget.data['city'] ?? '',
                             isModify: widget.isModify,
                             bookingId: widget.bookingId,
-                             resturendbokingId:widget.isModify
-                                ? widget.data['booking_id']:null),
-                          
+                            resturendbokingId: widget.isModify
+                                ? widget.data['booking_id']
+                                : null),
                       );
                     },
                     style: ButtonStyle(
@@ -357,9 +352,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     child: Text(
                       widget.isModify ? "Update Booking" : '   Book Now   ',
                       style: const TextStyle(color: Colors.white),
-                    )
-                    
-                     )
+                    ))
               ]),
             ),
           ),

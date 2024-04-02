@@ -10,7 +10,7 @@ class UserController extends GetxController {
   
     super.onInit();
    _loadLocalFavorites(); 
-  refreshData();
+   refreshData();
   }
 
   final db = FirebaseFirestore.instance;

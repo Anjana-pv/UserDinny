@@ -9,6 +9,7 @@ import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/styling/textsytling.dart';
 import 'package:user_dinny/view/screens/booking_scree.dart';
 import 'package:user_dinny/view/common_widgets/offer_widget.dart';
+import 'package:user_dinny/view/screens/fav_list.dart';
 import 'package:user_dinny/view/screens/search_screen.dart';
 
 class ScreenFirst extends StatelessWidget {
@@ -24,19 +25,30 @@ class ScreenFirst extends StatelessWidget {
     final offerimage = Get.put(NewBookingController());
 
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Home',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'FontStyle'),
-            ),
-          ),
+  appBar: AppBar(
+    
+    automaticallyImplyLeading: false,
+    title: const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text(
+        'Home',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'FontStyle',
         ),
+      ),
+    ),
+    actions: [
+      IconButton(onPressed: (){
+        Get.to(const FavoriteScreen());
+      },
+       icon: const Icon(Icons.favorite_border))],
+  ),
+
+
+          
+        
         body: SingleChildScrollView(
           child: Column(
             children: [

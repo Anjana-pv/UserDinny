@@ -33,17 +33,21 @@ class OfferWidget extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            List<DocumentSnapshot> document = snapshot.data!.docs;
+            RxList<DocumentSnapshot> document = snapshot.data!.docs.obs;
 
             return Stack(
               children: [
-                CarouselSlider.builder(
-                  itemCount: document.length,
-                  itemBuilder: (context, index, realIndex) {
+                ListView.builder(itemBuilder: (context, index) {
+                  List<dynamic>  imageList=document[index]['imageUrls'] ?? ''; 
+                return  CarouselSlider.builder( 
+                  itemCount: imageList.length, 
+                  itemBuilder: (context, imageIndex, realIndex) {
+                    
+
                     return Image.network(
-                      document[index]['imageUrl'] ?? '',
+                      imageList[imageIndex],  
                       height: 100,
-                      width: 300,
+                      width: 300, 
                       fit: BoxFit.contain,
                     );
                   },
@@ -59,7 +63,8 @@ class OfferWidget extends StatelessWidget {
                       myCurrentIndex.value = index;
                     },
                   ),
-                ),
+                );
+                },itemCount: document.length,),
                 Padding(
                   padding: const EdgeInsets.only(top: 210),
                   

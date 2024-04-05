@@ -31,6 +31,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
           ListTile(
             title: Text('Email: We collect email ids to ensure the identity of the user within our system.'),
           ),
+          ListTile(
+            title: Text('Payment Information: We collect payment information to process transactions for table bookings'),
+          ),
+          ListTile(
+            title: Text('Device Information: We may collect information about the device you use to access Our Dinny, such as IP address and browser type, for analytics and security purposes.'),
+          ),
           SizedBox(height: 16.0),
           Text(
             'Use of Personal Information',
@@ -41,42 +47,43 @@ class PrivacyPolicyScreen extends StatelessWidget {
             title: Text('User Authentication: Email ids and passwords are used for authenticating users and securing their accounts.'),
           ),
           ListTile(
-            title: Text('Communication: Contact numbers are used to communicate with users regarding their account, services, and important updates.'),
+            title: Text('Booking: We collect booking information to facilitate table reservations through our app.'),
+          ),
+          ListTile(
+            title: Text('Payment: Payment information is collected to process transactions for table bookings.'),
+          ),
+          ListTile(
+            title: Text('Communication: We may use your contact information to communicate with you regarding your account, bookings, and important updates'),
+          ),
+          ListTile(
+            title: Text('Improvement of Services: We may use the information collected to improve our services and user experience.'),
           ),
           SizedBox(height: 16.0),
           Text(
-            'Data Security',
+            'Contact Information',
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8.0),
-          Text(
-            'Our Dinny takes reasonable precautions to protect user information. However, no method of transmission over the internet, or method of electronic storage, is 100% secure. Therefore, while we strive to use commercially acceptable means to protect user information, we cannot guarantee its absolute security.',
-          ),
-          SizedBox(height: 16.0),
-          Text(
-            'Changes to Privacy Policy',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            'Our Dinny reserves the right to update or change our Privacy Policy at any time. Users will be notified of any changes by posting the new Privacy Policy on this page.',
-          ),
-          SizedBox(height: 16.0),
-          Text(
-            'Contact Us',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            'If you have any questions about this Privacy Policy, please contact us at contact@ourdinny.com.',
+          ListTile(
+            title: Text('If you have any questions about this Privacy Policy, please contact us at ourdinny@gmail.com.'),
           ),
           SizedBox(height: 16.0),
           Text(
             'By using Our Dinny, you agree to the collection and use of information in accordance with this policy.',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          Text(
+            '',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: PrivacyPolicyScreen(),
+  ));
 }

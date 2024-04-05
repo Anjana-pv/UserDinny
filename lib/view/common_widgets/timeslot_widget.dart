@@ -19,7 +19,7 @@ List<Widget> buildTimeSlots(
       String formattedStartTime = dateFormat.format(start);
       start = start.add(const Duration(hours: 1));
       String formattedEndTime = dateFormat.format(start);
-  
+
       timeSlotWidgets.add(
         InkWell(
           onTap: () {
@@ -66,25 +66,25 @@ class CustomElevatedButton extends StatelessWidget {
     if (prassedtime != null && selectedTime == prassedtime) {
       isSelected.value = !isSelected.value;
     }
-    return ElevatedButton( 
-        onPressed: () {
-          timeSlotController.selectedTimeSlot.value = selectedTime;
-          isSelected.value = !isSelected.value;   
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateColor.resolveWith(
-            (Set<MaterialState> states) => isSelected.value
-                ? const Color.fromARGB(255, 122, 162, 118)
-                : const Color.fromARGB(255, 236, 239, 242),
-          ),
+    return ElevatedButton(
+      onPressed: () {
+        timeSlotController.selectedTimeSlot.value = selectedTime;
+        isSelected.value = !isSelected.value;
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateColor.resolveWith(
+          (Set<MaterialState> states) => isSelected.value
+              ? const Color.fromARGB(255, 122, 162, 118)
+              : const Color.fromARGB(255, 236, 239, 242),
         ),
-        child: Text(
-          selectedTime,
-          style: TextStyle(
-              color: isSelected.value
-                  ? Colors.white
-                  : const Color.fromARGB(255, 19, 85, 21)),
-        ),
-      );
+      ),
+      child: Text(
+        selectedTime,
+        style: TextStyle(
+            color: isSelected.value
+                ? Colors.white
+                : const Color.fromARGB(255, 19, 85, 21)),
+      ),
+    );
   }
 }

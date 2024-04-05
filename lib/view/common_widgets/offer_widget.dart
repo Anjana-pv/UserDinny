@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:user_dinny/controller/booking_controller.dart';
-
+List<dynamic>  imageList=[];
 class OfferWidget extends StatelessWidget {
    OfferWidget({
     Key? key,
@@ -38,12 +38,10 @@ class OfferWidget extends StatelessWidget {
             return Stack(
               children: [
                 ListView.builder(itemBuilder: (context, index) {
-                  List<dynamic>  imageList=document[index]['imageUrls'] ?? ''; 
+              imageList=document[index]['imageUrls'] ?? ''; 
                 return  CarouselSlider.builder( 
                   itemCount: imageList.length, 
                   itemBuilder: (context, imageIndex, realIndex) {
-                    
-
                     return Image.network(
                       imageList[imageIndex],  
                       height: 100,
@@ -52,6 +50,7 @@ class OfferWidget extends StatelessWidget {
                     );
                   },
                   options: CarouselOptions(
+                    
                     autoPlay: true,
                     height: 200,
                     autoPlayCurve: Curves.fastOutSlowIn,
@@ -61,7 +60,7 @@ class OfferWidget extends StatelessWidget {
                     aspectRatio: 2.0,
                     onPageChanged: (index, reason) {
                       myCurrentIndex.value = index;
-                    },
+                    }, 
                   ),
                 );
                 },itemCount: document.length,),
@@ -73,7 +72,7 @@ class OfferWidget extends StatelessWidget {
                   child: Center(
                     child: Obx(() => AnimatedSmoothIndicator(
                       activeIndex: myCurrentIndex.value,
-                      count: document.length,
+                      count: imageList.length ,
                       effect: const WormEffect(
                         dotHeight: 8,
                         dotWidth: 8,

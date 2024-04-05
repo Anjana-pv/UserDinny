@@ -87,7 +87,6 @@ class _BookingScreenState extends State<BookingScreen> {
             style: GoogleFonts.lemon(
               textStyle: const TextStyle(
                 fontSize: 20,
-
                 fontWeight: FontWeight.bold,
               ),
             ),

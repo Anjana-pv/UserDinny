@@ -5,19 +5,18 @@ import 'package:get/get_rx/get_rx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController extends GetxController {
+  final db = FirebaseFirestore.instance;
+  RxList<String> favoriteRestaurants = <String>[].obs;
+
   @override
   void onInit() {
-  
     super.onInit();
-   _loadLocalFavorites(); 
-   refreshData();
+    _loadLocalFavorites();
+    refreshData();
   }
 
-  final db = FirebaseFirestore.instance;
-   RxList favoriteRestaurants = [].obs;
   Future<void> refreshData() async {
-    SharedPreferences getuserId = await SharedPreferences.getInstance();
-
+    final SharedPreferences getuserId = await SharedPreferences.getInstance();
     final userId = getuserId.getString('getuser_id');
     final snapshot = await FirebaseFirestore.instance
         .collection("users")
@@ -25,9 +24,10 @@ class UserController extends GetxController {
         .collection('favorites')
         .doc(userId)
         .get();
+
     final data = snapshot.data();
-    if (data != null && data['favorites'] != null) { 
-      favoriteRestaurants.value = data['favorites'];
+    if (data != null && data['favorites'] != null) {
+      favoriteRestaurants.value = List<String>.from(data['favorites']);
     }
   }
 
@@ -38,25 +38,22 @@ class UserController extends GetxController {
         .collection('favorites')
         .doc(userId)
         .get();
+
     final data = snapshot.data();
     if (data != null && data['favorites'] != null) {
       final List<dynamic> restaurants = data['favorites'];
-
       return restaurants.contains(restaurantId);
     }
     return false;
   }
 
   Stream<QuerySnapshot> getAccepted() {
-    final CollectionReference accepted =
-        FirebaseFirestore.instance.collection('approvedOne');
-    final acceptStream = accepted.snapshots();
-    return acceptStream;
+    return FirebaseFirestore.instance.collection('approvedOne').snapshots();
   }
 
   Future<List<String>> fetchProfileImageUrls() async {
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot =
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
           await db.collection('approvedOne').get();
 
       return snapshot.docs
@@ -70,10 +67,7 @@ class UserController extends GetxController {
   }
 
   Stream<QuerySnapshot> getUserDetails() {
-    final CollectionReference users =
-        FirebaseFirestore.instance.collection('users');
-    final userStream = users.snapshots();
-    return userStream;
+    return FirebaseFirestore.instance.collection('users').snapshots();
   }
 
   var selectedIndex = 0.obs;
@@ -83,8 +77,7 @@ class UserController extends GetxController {
   }
 
   Future<Map<String, dynamic>> getUserData() async {
-    SharedPreferences getuserId = await SharedPreferences.getInstance();
-
+    final SharedPreferences getuserId = await SharedPreferences.getInstance();
     final userId = getuserId.getString('getuser_id');
 
     if (userId != null) {
@@ -111,58 +104,47 @@ class UserController extends GetxController {
     return {};
   }
 
-  void addFavorite(String restaurantId, String userId) async {
+  Future<void> addFavorite(String restaurantId, String userId) async {
     try {
+      favoriteRestaurants.add(restaurantId);
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
-          .collection('fav_list')
-          .doc(restaurantId)
-          .set({
-        'restaurantId': restaurantId,
-      });
+          .collection('favorites')
+          .doc(userId)
+          .set({'favorites': favoriteRestaurants.toList()});
     } catch (e) {
       log('Error adding favorite: $e');
     }
   }
 
-  void addToFavoriteList(String userId, String restaurantId) async {
-    try {
-      await FirebaseFirestore.instance.collection('fav_list').doc(userId).set({
-        'restaurants': FieldValue.arrayUnion([restaurantId]),
-      }, SetOptions(merge: true));
-    } catch (e) {
-      log('Error adding to favorite list: $e');
-    }
+  Future<void> _loadLocalFavorites() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    final favoriteRestaurantIds =
+        sharedPreferences.getStringList('favorite_restaurants') ?? [];
+    favoriteRestaurants.assignAll(favoriteRestaurantIds);
+  }
+
+  Stream<QuerySnapshot> favratelist() {
+    return FirebaseFirestore.instance.collection('approvedOne').snapshots();
   }
 
   Future<void> toggleFavorite(String restaurantId, String userId) async {
     final isFav = await isFavorite(restaurantId, userId);
     if (isFav) {
       favoriteRestaurants.remove(restaurantId);
-
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection("favorites")
-          .doc(userId)
-          .set({'favorites': favoriteRestaurants});
     } else {
       favoriteRestaurants.add(restaurantId);
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection("favorites")
-          .doc(userId)
-          .set({'favorites': favoriteRestaurants});
     }
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection("favorites")
+        .doc(userId)
+        .set({'favorites': favoriteRestaurants.toList()});
 
     update();
   }
-  Future<void> _loadLocalFavorites() async {
-  final sharedPreferences = await SharedPreferences.getInstance();
-  final favoriteRestaurantIds = sharedPreferences.getStringList('favorite_restaurants') ?? [];
-  favoriteRestaurants.value = favoriteRestaurantIds;
-}
-
 }

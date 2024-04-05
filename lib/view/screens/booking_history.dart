@@ -198,7 +198,7 @@ class ScreenBookingHistory extends StatelessWidget {
               );
             } else {
               return const SizedBox(
-                child: Center(child: Text('error')),
+                child: Center(child: Image(image:AssetImage('assest/images/no internet.jpg'))),
               );
             }
           },

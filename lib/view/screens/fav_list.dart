@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_dinny/controller/firebase_fuction.dart';
 import 'package:user_dinny/view/screens/booking_scree.dart';
 import 'package:user_dinny/view/screens/search_screen.dart';
 
@@ -11,6 +12,7 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final usercll =Get.put(UserController());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -22,7 +24,7 @@ class FavoriteScreen extends StatelessWidget {
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: usercontroller.getAccepted(),
+        stream: usercll.favratelist(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -65,27 +67,26 @@ class FavoriteScreen extends StatelessWidget {
                         subtitle: Text(
                           "${restaurant['city']}",
                         ),
-                        trailing: Obx(
-                          () => IconButton(
+                        trailing: 
+                           IconButton(
                             icon: const Icon(Icons.favorite),
                             color: Colors.red,
                             onPressed: () async {
-                              SharedPreferences getuserId =
-                                  await SharedPreferences.getInstance();
-                              final userId = getuserId.getString('getuser_id');
-                              await usercontroller.toggleFavorite(
-                                  restaurant.id, userId!);
-                            },
+                               SharedPreferences getuserId = await SharedPreferences.getInstance();
+                               final userId = getuserId.getString('getuser_id');
+                              await usercontroller.toggleFavorite(  restaurant.id, userId!);
+                              },
                           ),
-                        )),
-                  ),
+                         )
+                        ),
+                  
                 );
               },
             );
           } else {
             return const SizedBox(
               child: Center(
-                child: Text('Please check the internet'),
+                child: Image(image:AssetImage('assest/images/no internet.jpg')),
               ),
             );
           }

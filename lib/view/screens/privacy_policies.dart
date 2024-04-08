@@ -73,7 +73,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           Text(
-            '',
+            'https://anjana-pv.github.io/UserDinny/',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ],

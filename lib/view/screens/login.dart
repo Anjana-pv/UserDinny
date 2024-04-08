@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:user_dinny/view/common_widgets/custom_textfeild.dart';
 import 'package:user_dinny/controller/auth_controller.dart';
 import 'package:user_dinny/styling/colors.dart';
+import 'package:user_dinny/view/screens/privacy_policies.dart';
 import 'package:user_dinny/view/screens/signin.dart';
 
 final GlobalKey<FormState> validationKey = GlobalKey<FormState>();
@@ -13,6 +15,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthController authController = Get.put(AuthController());
+    bool _isChecked = false;
     return Scaffold(
       body: Form(
         key: validationKey,
@@ -43,6 +46,23 @@ class Login extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+                SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                    
+                      GestureDetector(
+                        onTap: (){
+                         Get.to(PrivacyPolicyScreen()) ;    
+                        },
+                        child: Text(
+                          'Check the policy and privacy',
+                          style: TextStyle(color:  Color.fromARGB(255, 255, 255, 255),),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20,),
                 signInSignButton(context, true, () async {
                   if (validationKey.currentState?.validate() ?? false) {
                     authController.login(

@@ -66,7 +66,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assest/images/logo-img.png"
+  image_path: "assest/images/Frame 1 (3).png"
   min_sdk_android: 21
 
   # The "flutter_lints" package below contains a set of recommended lints to

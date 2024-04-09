@@ -32,7 +32,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
             title: Text('Email: We collect email ids to ensure the identity of the user within our system.'),
           ),
           ListTile(
-            title: Text('Payment Information: We collect payment information to process transactions for table bookings'),
+            title: Text('Phone Number: We collect phone numbers for communication and account verification purposes.'),
+          ),
+          ListTile(
+            title: Text('Payment Information: We collect payment information to process transactions for table bookings.'),
           ),
           ListTile(
             title: Text('Device Information: We may collect information about the device you use to access Our Dinny, such as IP address and browser type, for analytics and security purposes.'),
@@ -65,7 +68,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
           ),
           SizedBox(height: 8.0),
           ListTile(
-            title: Text('If you have any questions about this Privacy Policy, please contact us at ourdinny@gmail.com.'),
+            title: Text('If you have any questions about this Privacy Policy, please contact us at ourdinnyofficial@gmail.com.'),
           ),
           SizedBox(height: 16.0),
           Text(

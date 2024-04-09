@@ -56,8 +56,8 @@ class Login extends StatelessWidget {
                          Get.to(PrivacyPolicyScreen()) ;    
                         },
                         child: Text(
-                          'Check the policy and privacy',
-                          style: TextStyle(color:  Color.fromARGB(255, 255, 255, 255),),
+                          '* Check the policy and privacy',
+                          style: TextStyle(color:  Color.fromARGB(255, 255, 255, 255),fontSize: 18),
                         ),
                       ),
                     ],
